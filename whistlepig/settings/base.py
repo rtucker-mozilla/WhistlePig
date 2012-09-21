@@ -77,3 +77,16 @@ DOMAIN_METHODS['messages'] = [
 # ]
 
 LOGGING = dict(loggers=dict(playdoh={'level': logging.DEBUG}))
+def jinja_url(view_name, *args, **kwargs):
+    from django.core.urlresolvers import reverse, NoReverseMatch
+    try:
+        return reverse(view_name, args=args, kwargs=kwargs)
+    except NoReverseMatch:
+        try:
+            project_name = settings.SETTINGS_MODULE.split('.')[0]
+            return reverse(project_name + '.' + view_name,
+                           args=args, kwargs=kwargs)
+        except NoReverseMatch:
+            return ''
+import jinja2
+jinja2.filters.FILTERS['url'] = jinja_url
