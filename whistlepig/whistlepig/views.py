@@ -5,7 +5,7 @@ from models import StatusUpdate
 from django.http import HttpResponse
 from django.shortcuts import  get_object_or_404
 
-log = commonware.log.getLogger('whistlepig')
+#log = commonware.log.getLogger('whistlepig')
 import datetime
 def detail(request, id, template='whistlepig/detail.html'):
     status_update = get_object_or_404(StatusUpdate, pk=id)
