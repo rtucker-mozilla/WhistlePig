@@ -20,6 +20,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
+    (r'^browserid/', include('django_browserid.urls')),
 )
 
 ## In DEBUG mode, serve media files through Django.
