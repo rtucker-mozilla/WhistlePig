@@ -12,6 +12,10 @@ Built On
 [django]: http://www.djangoproject.com/
 [gh-playdoh]: https://github.com/mozilla/playdoh
 
+Additional Notes
+----------------
+cache directory must be writable by webserver user
+
 License
 -------
 This software is licensed under the [New BSD License][BSD]. For more
