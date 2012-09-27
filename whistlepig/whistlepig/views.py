@@ -17,28 +17,40 @@ def detail(request, id, template='whistlepig/detail.html'):
 def home(request, template='whistlepig/home.html'):
     """Main landing page for whistlepig"""
     total_months_to_show = 5
+    status_updates_found = False
     home_results = []
     """
         Get the most recent month of results. This
         will be the baseline for other months
     """
-    most_recent = StatusUpdate.objects.all().order_by('-posted_on')[1]
-    home_results.append({
-        'month_name': most_recent.posted_on.strftime("%B"),
-        'articles': get_results_by_month_year(most_recent.posted_on.month, most_recent.posted_on.year)
-        })
+    try:
+        most_recent = StatusUpdate.objects.all().order_by('-posted_on')[1]
+        status_updates_found = True
+    except IndexError:
+        """
+            There are no status updates
+        """
+        most_recent = False
+        pass
+    if status_updates_found:
+        home_results.append({
+            'month_name': most_recent.posted_on.strftime("%B"),
+            'articles': get_results_by_month_year(most_recent.posted_on.month, most_recent.posted_on.year)
+            })
 
     """
+        Check if we have a most_recent article. If so then:
+
         Iterate over previous months up to
         total_months_to_show and add them
         to the results list if not None
     """
-
-    for i in range(1, total_months_to_show):
-        the_month = monthdelta(most_recent.posted_on, -i)
-        month_results = get_month_of_results(the_month)
-        if month_results and not month_results['month_name'] in [m['month_name'] for m in home_results]:
-            home_results.append(month_results)
+    if most_recent:
+        for i in range(1, total_months_to_show):
+            the_month = monthdelta(most_recent.posted_on, -i)
+            month_results = get_month_of_results(the_month)
+            if month_results and not month_results['month_name'] in [m['month_name'] for m in home_results]:
+                home_results.append(month_results)
     data = {}
     data['updates'] = home_results
     return render(request, template, data)

@@ -4,6 +4,7 @@ setup_test_environment()
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+from models import StatusUpdate
 
 class HomePageTests(TestCase):
     fixtures = ['whistlepig']
@@ -32,3 +33,9 @@ class HomePageTests(TestCase):
         self.assertEqual(
                 str(response.context['updates'][0]['articles'][0]),
                 'Vidyo Maintenance Notice')
+
+    def test3_home_page_no_status_updates(self):
+        StatusUpdate.objects.all().delete()
+        response = self.client.get(reverse("whistlepig.home"), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['updates']), 0)
