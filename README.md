@@ -16,6 +16,10 @@ Additional Notes
 ----------------
 cache directory must be writable by webserver user
 
+Create 2 Severities
+Name: No Downtime, css_class no-downtime
+Name: Emergency, css_class emergency
+
 License
 -------
 This software is licensed under the [New BSD License][BSD]. For more
