@@ -17,8 +17,9 @@ Additional Notes
 cache directory must be writable by webserver user
 
 Create 2 Severities
-Name: No Downtime, css_class no-downtime
-Name: Emergency, css_class emergency
+
+* Name: No Downtime, css_class no-downtime
+* Name: Emergency, css_class emergency
 
 License
 -------
