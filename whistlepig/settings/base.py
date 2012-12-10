@@ -16,7 +16,8 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
     # Application base, containing global templates.
     '%s.base' % PROJECT_MODULE,
     '%s.whistlepig' % PROJECT_MODULE,
-    'django.contrib.admin',
+    'django.contrib.auth',
+    'django_browserid',
 ]
 
 LOCALE_PATHS = (
@@ -36,10 +37,10 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-SITE_URL = 'http://127.0.0.1:8000'
-LOGIN_URL = '/'
-LOGIN_REDIRECT_URL = 'whistlepig.home'
-LOGIN_REDIRECT_URL_FAILURE = 'whistlepig.home'
+SITE_URL = 'http://toolsdev2.dmz.scl3.mozilla.com:8099'
+LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/admin/whistlepig/statusupdate/'
+LOGIN_REDIRECT_URL_FAILURE = '/admin/login/'
 
 TEMPLATE_CONTEXT_PROCESSORS = list(TEMPLATE_CONTEXT_PROCESSORS) + [
     'django_browserid.context_processors.browserid_form',
@@ -91,3 +92,5 @@ def jinja_url(view_name, *args, **kwargs):
             return ''
 import jinja2
 jinja2.filters.FILTERS['url'] = jinja_url
+CSP_SCRIPT_SRC = ("'self'", 'https://browserid.org','https://login.persona.org')
+CSP_FRAME_SRC = ("'self'", 'https://browserid.org','https://login.persona.org')
