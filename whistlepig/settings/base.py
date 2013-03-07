@@ -19,6 +19,7 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
     'django.contrib.admin',
     'django.contrib.auth',
     'django_browserid',
+    'jingo_offline_compressor',
 ]
 
 LOCALE_PATHS = (
