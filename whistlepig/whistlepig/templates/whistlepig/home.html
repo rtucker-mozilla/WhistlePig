@@ -21,10 +21,10 @@
           <h2>Interact</h2>
           <ul>
             <!-- This list item below should only be rendered if a user is logged in -->
-            {% if request.user.is_authenticated() %}
+            {% if request.user.is_authenticated %}
                 <li><a href="#add_notice" id="add-notification">Add New Notification</a></li>
             {% endif %}
-            <li><a href="{{ 'rss'|url() }}">RSS Feed</a></li>
+            <li><a href="{{ 'rss'|url }}">RSS Feed</a></li>
           </ul>
         </aside>
       </section>
