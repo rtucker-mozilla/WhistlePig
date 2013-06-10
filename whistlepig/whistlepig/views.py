@@ -38,6 +38,7 @@ def event_feed(request):
         out_events.append({
             'title': event.summary,
             'id': int(event.id),
+            'url': '/detail/%s' % event.id,
             'color': event_color,
             'start': '"%s"' % (int(time.mktime(event.created_on.timetuple()))),
             'end': '"%s"' % (int(time.mktime(event.created_on.timetuple()))),
