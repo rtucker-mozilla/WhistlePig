@@ -77,7 +77,7 @@ def home(request, template='whistlepig/home.html'):
         will be the baseline for other months
     """
     try:
-        most_recent = StatusUpdate.objects.all().order_by('-posted_on')[1]
+        most_recent = StatusUpdate.objects.all().order_by('-posted_on')[0]
         status_updates_found = True
     except IndexError:
         """
