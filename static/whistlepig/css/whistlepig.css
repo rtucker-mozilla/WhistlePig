@@ -208,6 +208,14 @@ a img {
   -ms-transition: all linear 0.25s;
   transition: all linear 0.25s;
 }
+button.small {
+  height: 32px;
+  width: 38px;
+  padding-left: 6px;
+  padding-right: 6px;
+  line-height: 24px;
+  margin-left: 4px;
+}
 .button:hover,
 .button:link:hover,
 .button:visited:hover,
