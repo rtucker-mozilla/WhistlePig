@@ -98,3 +98,4 @@ jinja2.filters.FILTERS['url'] = jinja_url
 CSP_SCRIPT_SRC = ("'self'", 'https://browserid.org','https://login.persona.org')
 CSP_FRAME_SRC = ("'self'", 'https://browserid.org','https://login.persona.org')
 TASTYPIE_DEFAULT_FORMATS = ['json']
+BUGZILLA_URL = 'https://bugzilla.mozilla.org/show_bug.cgi?id='

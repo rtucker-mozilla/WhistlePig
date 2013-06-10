@@ -88,6 +88,7 @@ def home(request, template='whistlepig/home.html'):
     if status_updates_found:
         home_results.append({
             'month_name': most_recent.posted_on.strftime("%B"),
+            'month_year': most_recent.posted_on.strftime("%Y"),
             'articles': get_results_by_month_year(most_recent.posted_on.month, most_recent.posted_on.year)
             })
 
@@ -105,6 +106,7 @@ def home(request, template='whistlepig/home.html'):
             if month_results and not month_results['month_name'] in [m['month_name'] for m in home_results]:
                 home_results.append(month_results)
     data = {}
+    #import pdb; pdb.set_trace()
     data['updates'] = home_results
     return render(request, template, data)
 
@@ -123,6 +125,7 @@ def get_month_of_results(current_month):
     
     ret_data = {
         'month_name': most_recent.posted_on.strftime("%B"),
+        'month_year': most_recent.posted_on.strftime("%Y"),
         'articles': get_results_by_month_year(most_recent.posted_on.month, most_recent.posted_on.year)
         }
     return ret_data
