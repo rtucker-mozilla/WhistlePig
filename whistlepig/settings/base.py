@@ -16,6 +16,7 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
     # Application base, containing global templates.
     '%s.base' % PROJECT_MODULE,
     '%s.whistlepig' % PROJECT_MODULE,
+    '%s.api' % PROJECT_MODULE,
     'django.contrib.admin',
     'django.contrib.auth',
     'django_browserid',
@@ -35,14 +36,14 @@ JINGO_EXCLUDE_APPS = [
 
 # BrowserID configuration
 AUTHENTICATION_BACKENDS = [
-    'django_browserid.auth.BrowserIDBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'django_browserid.auth.BrowserIDBackend',
 ]
 
 SITE_URL = 'http://toolsdev2.dmz.scl3.mozilla.com:8099'
-LOGIN_URL = '/admin/login/'
-LOGIN_REDIRECT_URL = '/admin/whistlepig/statusupdate/'
-LOGIN_REDIRECT_URL_FAILURE = '/admin/login/'
+LOGIN_URL = '/en-US/admin/login/'
+LOGIN_REDIRECT_URL = '/en-US/admin/whistlepig/statusupdate/'
+LOGIN_REDIRECT_URL_FAILURE = '/en-US/admin/login/'
 
 TEMPLATE_CONTEXT_PROCESSORS = list(TEMPLATE_CONTEXT_PROCESSORS) + [
     'django_browserid.context_processors.browserid_form',
@@ -96,3 +97,4 @@ import jinja2
 jinja2.filters.FILTERS['url'] = jinja_url
 CSP_SCRIPT_SRC = ("'self'", 'https://browserid.org','https://login.persona.org')
 CSP_FRAME_SRC = ("'self'", 'https://browserid.org','https://login.persona.org')
+TASTYPIE_DEFAULT_FORMATS = ['json']

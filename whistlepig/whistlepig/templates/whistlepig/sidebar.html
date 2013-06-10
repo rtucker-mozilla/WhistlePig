@@ -1,0 +1,18 @@
+<section id="sidebar" class="span3">
+<aside>
+    <h2>Legend</h2>
+    <ul>
+    <li class="emergency">Emergency</li>
+    <li class="downtime">Downtime Expected</li>
+    <li class="no-downtime">No Downtime Expected</li>
+    </ul>
+    <h2>Interact</h2>
+    <ul>
+    <!-- This list item below should only be rendered if a user is logged in -->
+    <li><a href="/calendar/">Calendar</a></li>
+    <!--<li><a href="#add_notice" id="add-notification">Add New Notification</a></li>-->
+    <li><a href="/rss/">RSS Feed</a></li>
+    </ul>
+    <h2 style='margin-top: 5px; font-weight: bold;'><strong>Search:</strong> <form method='post' action='/en-US/search/'><input type='text' name='search' value=''><input type='submit' name='submit' value='Go' /><input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}"></form></h2>
+</aside>
+</section>

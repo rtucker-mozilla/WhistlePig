@@ -1,0 +1,72 @@
+{% extends "whistlepig_base.html" %}
+
+{% block content %}
+
+  <hgroup id="main-feature" class="center">
+    <h1 class="app-name">whistlepig</h1>
+    <h2>Status Update Detail</h2>
+  </hgroup>
+
+
+  <div id="main-content">
+    <div class="row">
+      {% include "whistlepig/sidebar.html" ignore missing with context %}
+      <article id="top" class="announcements-panel span7">
+        <h1 class="period-header">Search Results</h1>
+            {% if not search_results %}
+                <h3>No Search Results Found</h3>
+            {% endif %}
+            {% for article in search_results %}
+                <section class="period-data {{ article.severity.css_class }}">
+                <h2>{{ article.summary }}<span class="bugzilla-id">{% if article.bugzilla_id %}(Bugzilla ID: <a href="{{settings.BUGZILLA_URL}}{{ article.bugzilla_id }}">{{ article.bugzilla_id }}</a>){% endif %}</span></h2>
+                <p>{{ article.description }}</p>
+                <p>Admin Assigned: {{ article.admin_assigned }}<time datetime="{{ article.posted_on }}">{{ article.posted_on.strftime("%B %e, %Y") }}</time></p>
+                    {% if article.serviceoutage_set.count() > 0 %}
+                    <p><strong>Services Affected</strong>:
+                     {% for p in article.serviceoutage_set.all() %}
+                        {{ p.service.name }}{% if not loop.last %},{% endif %}
+                     {% endfor %}
+                    </p>
+                    {% endif %}
+                </section>
+            {% endfor %}
+            {% if search_results %}
+                <hr class="divider" />
+            {% endif %}
+        </article>
+    </div>
+  </div>
+<!-- This form below should only be rendered if a user is logged in -->
+<form name="addnotice" id="add_notice" action="/" method="post">
+  <fieldset>
+    <legend>Complete the information below to add an announcement</legend>
+
+    <div class="field">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" />
+    </div>
+
+    <div class="field">
+      <label for="description">Description</label>
+      <textarea cols="65" rows="15" id="description" name="description" placeholder="Enter short description of notice"></textarea>
+    </div>
+
+    <div class="field">
+      <label for="bugzilla">BugzillaID:</label>
+      <input type="text" id="bugzilla" name="bugzilla" />
+    </div>
+
+    <div class="field">
+      <label for="admin-assigned">Admin Assigned:</label>
+      <input type="text" id="admin-assigned" name="admin-assigned" />
+    </div>
+
+    <div class="field">
+      <label for="time-window">Time Window:</label>
+      <input type="text" id="time-window" name="time-window" placeholder="ex. 2012-09-01" />
+    </div>
+
+    <input type="submit" class="button" name="submit-notice" value="Add Notice&nbsp;»" />
+  </fieldset>
+</form>
+{% endblock %}

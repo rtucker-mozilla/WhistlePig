@@ -21,7 +21,7 @@ class HomePageTests(TestCase):
         self.assertEqual(len(response.context['updates'][1]), 2)
         self.assertEqual(
                 str(response.context['updates'][0]['articles'][0]),
-                'Vidyo Maintenance Notice')
+                'Test Market Place Notification')
 
 
     def test2_home_page_contexts(self):
@@ -32,7 +32,7 @@ class HomePageTests(TestCase):
         self.assertEqual(len(response.context['updates'][1]), 2)
         self.assertEqual(
                 str(response.context['updates'][0]['articles'][0]),
-                'Vidyo Maintenance Notice')
+                'Test Market Place Notification')
 
     def test3_home_page_no_status_updates(self):
         StatusUpdate.objects.all().delete()

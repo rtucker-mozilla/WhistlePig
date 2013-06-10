@@ -10,22 +10,7 @@
 
   <div id="main-content">
     <div class="row">
-      <section id="sidebar" class="span3">
-        <aside>
-          <h2>Legend</h2>
-          <ul>
-            <li class="emergency">Emergency</li>
-            <li class="downtime">Downtime Expected</li>
-            <li class="no-downtime">No Downtime Expected</li>
-          </ul>
-          <h2>Interact</h2>
-          <ul>
-            <!-- This list item below should only be rendered if a user is logged in -->
-            <li><a href="#add_notice" id="add-notification">Add New Notification</a></li>
-            <li><a href="/rss/">RSS Feed</a></li>
-          </ul>
-        </aside>
-      </section>
+      {% include "whistlepig/sidebar.html" ignore missing with context %}
       <article id="top" class="announcements-panel span7">
         <h1 class="period-header"><time datetime="2012-08-10T15:29:00">{{ article.posted_on.strftime("%B") }}</time></h1>
                 <section class="period-data {{ article.severity.css_class }}">

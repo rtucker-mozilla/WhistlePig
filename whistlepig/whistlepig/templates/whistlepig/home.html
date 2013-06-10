@@ -10,24 +10,7 @@
 
   <div id="main-content">
     <div class="row">
-      <section id="sidebar" class="span3">
-        <aside>
-          <h2>Legend</h2>
-          <ul>
-            <li class="emergency">Emergency</li>
-            <li class="downtime">Downtime Expected</li>
-            <li class="no-downtime">No Downtime Expected</li>
-          </ul>
-          <h2>Interact</h2>
-          <ul>
-            <!-- This list item below should only be rendered if a user is logged in -->
-            {% if request.user.is_authenticated %}
-                <li><a href="#add_notice" id="add-notification">Add New Notification</a></li>
-            {% endif %}
-            <li><a href="{{ 'rss'|url }}">RSS Feed</a></li>
-          </ul>
-        </aside>
-      </section>
+      {% include "whistlepig/sidebar.html" ignore missing with context %}
       <article id="top" class="announcements-panel span7">
         {% if updates %}
             {% for month_group in updates %}
@@ -37,6 +20,13 @@
                     <h2><a href="{{ "article-detail"|url(article.id) }}">{{ article.summary }}</a><span class="bugzilla-id">{% if article.bugzilla_id %}(Bugzilla ID: <a href="{{settings.BUGZILLA_URL}}{{ article.bugzilla_id }}">{{ article.bugzilla_id }}</a>){% endif %}</span></h2>
                     <p>{{ article.description }}</p>
                     <p>Admin Assigned: {{ article.admin_assigned }}<time datetime="{{ article.posted_on }}">{{ article.posted_on.strftime("%B %e, %Y") }}</time></p>
+                    {% if article.serviceoutage_set.count() > 0 %}
+                    <p><strong>Services Affected</strong>:
+                     {% for p in article.serviceoutage_set.all() %}
+                        {{ p.service.name }}{% if not loop.last %},{% endif %}
+                     {% endfor %}
+                    </p>
+                    {% endif %}
                     </section>
                 {% endfor %}
             <hr class="divider" />

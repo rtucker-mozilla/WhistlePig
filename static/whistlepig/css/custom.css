@@ -1,0 +1,16 @@
+.formset_inputs label {
+    float: left;
+    margin-right: 5px;
+}
+span.formset_inputs input[type=text] {
+    float: left;
+}
+.formset_inputs select {
+    float: left;
+    margin-left: 5px;
+}   
+span.formset_inputs input[type=checkbox]{
+    float: left;
+    margin-top: 8px;
+}
+

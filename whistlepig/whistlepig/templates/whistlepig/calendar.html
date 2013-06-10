@@ -1,0 +1,92 @@
+{% extends "whistlepig_base.html" %}
+
+{% block content %}
+
+  <hgroup id="main-feature" class="center">
+    <h1 class="app-name">whistlepig</h1>
+    <h2>Notification Calendar</h2>
+  </hgroup>
+
+
+  <div id="main-content">
+    <div class="row">
+      {% include "whistlepig/sidebar.html" ignore missing with context %}
+      <article id="top" class="announcements-panel span7">
+        <h1 class="period-header">Notification Calendar</h1>
+        <div id='calendar' style='margin: 10px;'></div>
+      </article>
+    </div>
+  </div>
+<!-- This form below should only be rendered if a user is logged in -->
+<link rel="stylesheet" href="{{ static('whistlepig/css/jquery.fullcalendar.css') }}" />
+<link rel="stylesheet" href="{{ static('whistlepig/css/smoothness/jquery-ui-1.8.18.custom.css') }}" />
+<script src="{{ static('whistlepig/js/jquery-1.7.1.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        $('#calendar').fullCalendar({
+            theme: true,
+            header: {
+                left: '',
+                center: 'title',
+                //right: 'today,month,agendaWeek,agendaDay'
+                //left: 'month'
+                right: 'prev,next'
+            },
+            //eventSources: [
+            //    {
+            //        url: '/en-US/event_feed' // use the `url` property
+            //    }
+            //],
+            events: function(start, end, callback) {
+                // do some asynchronous ajax
+                contentType:"application/json; charset=utf-8",
+                $.getJSON("/en-US/event_feed",
+                        {
+                            start: start.getTime() / 1000,
+                            end: end.getTime() / 1000
+                        },
+                        function(result) {
+                                if(result != null)
+                                {
+                                    for (i in result) {
+                                        var calEvent = result[i];
+                                        start_int = parseInt(result[i]['start'].replace(/"/g,'')) * 1000;
+                                        calEvent.date = new Date(start_int);
+                                        calEvent.start = new Date(start_int);
+                                        calEvent.end = new Date(start_int);
+                                        //calEvent.date = new Date(parseInt(calEvent.date.replace("/Date(", "").replace(")/", ""), 10));
+                                        //calEvent.start = new Date(parseInt(calEvent.start.replace("/Date(", "").replace(")/", ""), 10));
+                                        //calEvent.end = new Date(parseInt(calEvent.end.replace("/Date(", "").replace(")/", ""), 10));
+                                    }
+                                }
+
+                                var calevents = result;
+                                // then, pass the CalEvent array to the callback
+                                callback(calevents);
+
+                        });
+
+            },
+            editable: false
+            //events: {{ events|safe }}
+        });
+
+    });
+    /*function parse_date(string) {  
+        var date = new Date();  
+        var parts = String(string).split(/[- :]/);  
+    
+        date.setFullYear(parts[0]);  
+        date.setMonth(parts[1] - 1);  
+        date.setDate(parts[2]);  
+    
+        return date;  
+    }*/
+</script>
+{% endblock %}

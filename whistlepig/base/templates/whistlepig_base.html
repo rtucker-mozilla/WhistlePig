@@ -11,6 +11,9 @@
     <!--[if lt IE 9]>
       <script src={{ static('/whistlepig/js/libs/html5shiv.js') }}></script>
     <![endif]-->
+  {% block extra_head %}
+
+  {% endblock %}
   </head>
   <body id="sandstone" class="sand">
     <div id="outer-wrapper">
@@ -81,5 +84,6 @@
     <script src="{{ static('whistlepig/js/libs/jquery-1.7.1.min.js') }}"></script>
     <script src="{{ static('whistlepig/js/libs/jquery.simplebox.js') }}"></script>
     <script src="{{ static('whistlepig/js/whistlepig.js') }}"></script>
+    <script src="{{ static('whistlepig/js/jquery.fullcalendar.js') }}"></script>
   </body>
 </html>
