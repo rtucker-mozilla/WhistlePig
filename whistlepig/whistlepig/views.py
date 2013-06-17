@@ -21,8 +21,13 @@ def detail(request, id, template='whistlepig/detail.html'):
 def event_feed(request):
     start_time = request.GET.get('start', None)
     end_time = request.GET.get('end', None)
-    start_query = (datetime.datetime.fromtimestamp(int(start_time)).strftime('%Y-%m-%d'))
-    end_query = (datetime.datetime.fromtimestamp(int(end_time)).strftime('%Y-%m-%d'))
+
+    try:
+        start_query = (datetime.datetime.fromtimestamp(int(start_time)).strftime('%Y-%m-%d'))
+        end_query = (datetime.datetime.fromtimestamp(int(end_time)).strftime('%Y-%m-%d'))
+    except TypeError:
+        return HttpResponse('You must supply a start and end timestamp')
+
     events = StatusUpdate.objects.filter(posted_on__gte=start_query).filter(posted_on__lte=end_query)
     out_events = []
     for event in events:
