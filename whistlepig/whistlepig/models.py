@@ -3,6 +3,7 @@ from django.db import models
 class StatusUpdate(models.Model):
     summary = models.CharField(max_length=255, blank=False)
     posted_by = models.CharField(max_length=255, blank=False)
+    duration_minutes = models.IntegerField()
     admin_assigned = models.CharField(max_length=255, blank=False)
     bugzilla_id = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=False)
