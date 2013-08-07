@@ -45,7 +45,7 @@ def event_feed(request):
             'id': int(event.id),
             'url': '/detail/%s' % event.id,
             'color': event_color,
-            'start': '"%s"' % (int(time.mktime(event.start_time_on.timetuple()))),
+            'start': '"%s"' % (int(time.mktime(event.start_time.timetuple()))),
             'end': '"%s"' % (int(time.mktime(event.start_time.timetuple()))),
             })
     return HttpResponse(json.dumps(out_events))
