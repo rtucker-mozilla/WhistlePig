@@ -4,7 +4,7 @@ from tastypie.serializers import Serializer
 from tastypie.authorization import Authorization
 from tastypie.authorization import DjangoAuthorization
 from django.core.exceptions import ValidationError
-from tastypie.authentication import Authentication
+from tastypie.authentication import Authentication, BasicAuthentication
 from django.core.serializers import json as djson
 from tastypie.authorization import DjangoAuthorization
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
@@ -20,6 +20,21 @@ class PrettyJSONSerializer(Serializer):
         return json.dumps(data, cls=djson.DjangoJSONEncoder,
                 sort_keys=True, ensure_ascii=False, indent=self.json_indent)
 
+class WhistlepigAuthentication(BasicAuthentication):
+
+    def is_authenticated(self, request, **kwargs):
+        if request.method == 'GET':
+            return True
+        return super( WhistlepigAuthentication, self ).is_authenticated( request, **kwargs )
+
+class WhistlepigAuthorization(DjangoAuthorization):
+
+    def is_authorized(self, request, object=None):
+        if request.method == 'GET':
+            return True
+        else:
+            return super( WhistlepigAuthorization, self ).is_authorized( request, object )
+
 class CustomAPIResource(ModelResource):
     def __init__(self, *args, **kwargs):
         super(CustomAPIResource, self).__init__(*args, **kwargs)
@@ -33,8 +48,8 @@ class CustomAPIResource(ModelResource):
 
     class Meta:
         serializer = PrettyJSONSerializer()
-        authorization= DjangoAuthorization()
-        authentication = Authentication()
+        authorization = WhistlepigAuthorization()
+        authentication = WhistlepigAuthentication()
         allowed_methods = ['get', 'post', 'put', 'delete', 'patch', 'PATCH']
 
 
