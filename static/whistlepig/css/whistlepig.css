@@ -1555,6 +1555,9 @@ time {
 .downtime {
   border-left: 10px solid orange;
 }
+.downtime-expected {
+  border-left: 10px solid orange;
+}
 .no-downtime {
   border-left: 10px solid green;
 }
