@@ -8,7 +8,7 @@ class StatusUpdate(models.Model):
     bugzilla_id = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=False)
     created_on = models.DateTimeField(auto_now_add=True)
-    start_time = models.DateTimeField(null=True, blank=True)
+    start_time = models.DateTimeField(null=False, blank=False)
     posted_on = models.DateTimeField(auto_now_add=True)
     severity = models.ForeignKey('Severity')
     status = models.ForeignKey('Status')

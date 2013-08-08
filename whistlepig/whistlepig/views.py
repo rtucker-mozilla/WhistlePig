@@ -28,7 +28,7 @@ def event_feed(request):
     except TypeError:
         return HttpResponse('You must supply a start and end timestamp')
 
-    events = StatusUpdate.objects.filter(posted_on__gte=start_query).filter(posted_on__lte=end_query)
+    events = StatusUpdate.objects.filter(start_time__gte=start_query).filter(start_time__lte=end_query)
     out_events = []
     for event in events:
         # Want to tie this into the backend at some point
@@ -39,14 +39,17 @@ def event_feed(request):
             event_color = 'green'
         else:
             event_color = 'orange'
-        
+
+        start_time = int(time.mktime(event.start_time.timetuple()))
+        end_time = int(time.mktime(event.start_time.timetuple()))
+
         out_events.append({
             'title': event.summary,
             'id': int(event.id),
             'url': '/detail/%s' % event.id,
             'color': event_color,
-            'start': '"%s"' % (int(time.mktime(event.start_time.timetuple()))),
-            'end': '"%s"' % (int(time.mktime(event.start_time.timetuple()))),
+            'start': '"%s"' % (start_time),
+            'end': '"%s"' % (end_time),
             })
     return HttpResponse(json.dumps(out_events))
 
