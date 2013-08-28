@@ -56,13 +56,13 @@ class Service(models.Model):
     def __unicode__(self):
         return self.name
 
-class source_email_address(models.Model):
+class SourceEmailAddress(models.Model):
     name = models.CharField(max_length=255, blank=False)
 
     def __unicode__(self):
         return self.name
 
-class destination_email_address(models.Model):
+class DestinationEmailAddress(models.Model):
     name = models.CharField(max_length=255, blank=False)
 
     def __unicode__(self):
