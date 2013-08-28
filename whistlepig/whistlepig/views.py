@@ -85,7 +85,7 @@ def home(request, template='whistlepig/home.html'):
         will be the baseline for other months
     """
     try:
-        most_recent = StatusUpdate.objects.all().order_by('-posted_on')[0]
+        most_recent = StatusUpdate.objects.all().order_by('-start_time')[0]
         status_updates_found = True
     except IndexError:
         """
@@ -95,9 +95,9 @@ def home(request, template='whistlepig/home.html'):
         pass
     if status_updates_found:
         home_results.append({
-            'month_name': most_recent.posted_on.strftime("%B"),
-            'month_year': most_recent.posted_on.strftime("%Y"),
-            'articles': get_results_by_month_year(most_recent.posted_on.month, most_recent.posted_on.year)
+            'month_name': most_recent.start_time.strftime("%B"),
+            'month_year': most_recent.start_time.strftime("%Y"),
+            'articles': get_results_by_month_year(most_recent.start_time.month, most_recent.start_time.year)
             })
 
     """
@@ -109,7 +109,7 @@ def home(request, template='whistlepig/home.html'):
     """
     if most_recent:
         for i in range(1, total_months_to_show):
-            the_month = monthdelta(most_recent.posted_on, -i)
+            the_month = monthdelta(most_recent.start_time, -i)
             month_results = get_month_of_results(the_month)
             if month_results and not month_results['month_name'] in [m['month_name'] for m in home_results]:
                 home_results.append(month_results)
@@ -121,20 +121,20 @@ def home(request, template='whistlepig/home.html'):
 #def rss(request, template='whistlepig/home.html'):
 
 def get_results_by_month_year(month, year):
-    return StatusUpdate.objects.filter(posted_on__year=year, posted_on__month=month)
+    return StatusUpdate.objects.filter(start_time__year=year, start_time__month=month)
 
 def get_month_of_results(current_month):
 
     try:
-        most_recent = StatusUpdate.objects.filter(posted_on__lt=current_month).order_by('-posted_on')[1]
+        most_recent = StatusUpdate.objects.filter(start_time__lte=current_month).order_by('-start_time')[0]
     except IndexError:
         ### No results for this page
         return None
     
     ret_data = {
-        'month_name': most_recent.posted_on.strftime("%B"),
-        'month_year': most_recent.posted_on.strftime("%Y"),
-        'articles': get_results_by_month_year(most_recent.posted_on.month, most_recent.posted_on.year)
+        'month_name': most_recent.start_time.strftime("%B"),
+        'month_year': most_recent.start_time.strftime("%Y"),
+        'articles': get_results_by_month_year(most_recent.start_time.month, most_recent.start_time.year)
         }
     return ret_data
 
