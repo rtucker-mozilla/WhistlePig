@@ -85,6 +85,7 @@
     <script src="{{ static('whistlepig/js/libs/jquery.simplebox.js') }}"></script>
     <script src="{{ static('whistlepig/js/whistlepig.js') }}"></script>
     <script src="{{ static('whistlepig/js/jquery.fullcalendar.js') }}"></script>
+    <script src="{{ static('whistlepig/js/jquery.readmore.min.js') }}"></script>
     <script>
         $(document).ready(function(){ 
         $("'[placeholder]'").focus(function() {
@@ -102,5 +103,7 @@
         }).blur();
         });
     </script>
+  {% block extra_footer %}
+  {% endblock %}
   </body>
 </html>

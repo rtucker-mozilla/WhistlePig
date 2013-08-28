@@ -1610,4 +1610,6 @@ time {
 .ie7 #close_simplebox {
   margin-left: 40em;
 }
-
+a.readmore-js-toggle {
+    margin-left: 8px;
+}

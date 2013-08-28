@@ -83,3 +83,11 @@
   </fieldset>
 </form>
 {% endblock %}
+{% block extra_footer %}
+<script>
+    $('section.period-data').readmore({
+    speed: 75,
+    maxHeight: 330
+    });
+</script>
+{% endblock %}
