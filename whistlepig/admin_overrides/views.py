@@ -25,7 +25,7 @@ def admin_send_outage_notification(request, id, template='admin_overrides/admin_
         form = OutageNotificationForm(request.POST, status_update=status_update)
         if form.is_valid():
             cleaned_data = form.clean()
-            destination_email_address = 'rtucker@mozilla.com'
+            destination_email_address = cleaned_data['destination_email_address']
             source_email_address = cleaned_data['source_email_address']
             send_mail(cleaned_data['subject'], cleaned_data['email_message'], source_email_address, [destination_email_address])
     else:
