@@ -24,8 +24,8 @@
                     {% endif %}
                 </p>
                 <p>{{ article.description|linebreaks|safe }}</p>
-                <p>Admin Assigned: {{ article.admin_assigned }}<time datetime="{{ article.posted_on }}">{{ article.posted_on.strftime("%B %e, %Y") }}</time></p>
-                <p>Status: {{ article.status }}</p>
+                <p>Admin Assigned: {{ article.admin_assigned }}</p>
+                <p><strong>Status: {{ article.status }}</strong></p>
                 </section>
         <hr class="divider" />
         </article>
