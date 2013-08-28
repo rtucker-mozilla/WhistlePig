@@ -1,0 +1,34 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n adminmedia %}
+{% block content %}
+<form method='post' action='.'>
+    {% for field in form %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+    {% endfor %}
+    {% csrf_token %}
+    <input style='float: left;' type='submit' class='default' value='Send Notification' />
+</form>
+<script src='/static/whistlepig/js/jquery-1.7.1.min.js'></script>
+<script>
+    $(document).ready(function(){
+        $("#id_source_email_address").change(function(){
+            var message_recipient = ($(this).val());
+            var message_body = $('#id_email_message').val();
+            message_body = message_body.replace(/<<source_email_address>>/g, message_recipient)
+            if(message_recipient == 'infra@mozilla.com'){
+                message_body = message_body.replace(/<<source_description>>/g, 'Mozilla IT Operations')
+            }
+            if(message_recipient == 'servicedesk@mozilla.com'){
+                message_body = message_body.replace(/<<source_description>>/g, 'Service Desk')
+            }
+            $("#id_email_message").val(message_body);
+        });
+        $("#id_destination_email_address").change(function(){
+            alert('destination changed');
+        });
+    });
+</script>
+{% endblock %}

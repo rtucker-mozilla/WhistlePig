@@ -5,12 +5,22 @@ import operator
 from django.shortcuts import render
 from models import StatusUpdate
 from django.http import HttpResponse
+from django.template import RequestContext
+from django.shortcuts import render_to_response
 from django.shortcuts import  get_object_or_404
 import datetime
 import json
 import time
 #log = commonware.log.getLogger('whistlepig')
 import datetime
+from django.contrib.admin.views.decorators import staff_member_required
+
+@staff_member_required
+def admin_send_outage_notification(request, id, template='whistlepig/admin_outage_notification.html'):
+    data = {}
+    return render_to_response(template,
+              context_instance=RequestContext(request))
+
 def detail(request, id, template='whistlepig/detail.html'):
     status_update = get_object_or_404(StatusUpdate, pk=id)
     data = {

@@ -36,6 +36,7 @@ urlpatterns = patterns('',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
+    (r'^admin/statusupdate/sendoutagenotification/(?P<id>\d+)[/]$', 'whistlepig.admin_overrides.views.admin_send_outage_notification'),
     (r'^admin/', include(admin.site.urls)),
     (r'^browserid/', include('django_browserid.urls')),
     (r'^api[/]', include('whistlepig.api.urls')),

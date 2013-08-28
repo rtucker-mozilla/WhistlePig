@@ -17,6 +17,7 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
     '%s.base' % PROJECT_MODULE,
     '%s.whistlepig' % PROJECT_MODULE,
     '%s.api' % PROJECT_MODULE,
+    '%s.admin_overrides' % PROJECT_MODULE,
     'django.contrib.admin',
     'django.contrib.auth',
     'django_browserid',
@@ -32,6 +33,7 @@ LOCALE_PATHS = (
 JINGO_EXCLUDE_APPS = [
     'admin',
     'registration',
+    'admin_overrides',
 ]
 
 # BrowserID configuration

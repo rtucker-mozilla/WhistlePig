@@ -68,3 +68,5 @@ class DestinationEmailAddress(models.Model):
     def __unicode__(self):
         return self.name
 
+class OutageNotificationTemplate(models.Model):
+    outage_notification_template = models.TextField(blank=False)
