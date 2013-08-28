@@ -5,7 +5,7 @@ from whistlepig.whistlepig.models import StatusUpdate, OutageNotificationTemplat
 class OutageNotificationForm(forms.Form):
     source_email_address = forms.ChoiceField(required=True)
     destination_email_address = forms.ChoiceField(required=True)
-    subject = forms.CharField(max_length=128)
+    subject = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'size':'100'}))
     email_message = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":100}))
 
     def interpolate_template(self, template, status_update):
@@ -32,7 +32,7 @@ class OutageNotificationForm(forms.Form):
         super(OutageNotificationForm, self).__init__(*args, **kwargs)
         self.fields['source_email_address'].choices = source_email_addresses
         self.fields['destination_email_address'].choices = destination_email_addresses
-        self.fields['subject'].initial = status_update.summary
+        self.fields['subject'].initial = "[OUTAGE NOTIFICATION] %s" % status_update.summary
         self.fields['email_message'].initial = self.interpolate_template(email_template, status_update)
 
 
