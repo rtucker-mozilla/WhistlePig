@@ -62,3 +62,9 @@ class source_email_address(models.Model):
     def __unicode__(self):
         return self.name
 
+class destination_email_address(models.Model):
+    name = models.CharField(max_length=255, blank=False)
+
+    def __unicode__(self):
+        return self.name
+
