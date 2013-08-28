@@ -21,6 +21,7 @@ from forms import OutageNotificationForm
 @staff_member_required
 def admin_send_outage_notification(request, id, template='admin_overrides/admin_outage_notification.html'):
     status_update = get_object_or_404(StatusUpdate, id=id)
+    message = None
     if request.method == 'POST':
         form = OutageNotificationForm(request.POST, status_update=status_update)
         if form.is_valid():
@@ -28,12 +29,13 @@ def admin_send_outage_notification(request, id, template='admin_overrides/admin_
             destination_email_address = cleaned_data['destination_email_address']
             source_email_address = cleaned_data['source_email_address']
             send_mail(cleaned_data['subject'], cleaned_data['email_message'], source_email_address, [destination_email_address])
+            message = 'Outage Notification Sent'
     else:
         form = OutageNotificationForm(status_update=status_update)
     return render_to_response(template,
             {
                 'form': form,
-                status_update: status_update,
+                'message': message,
             },
               context_instance=RequestContext(request))
 
