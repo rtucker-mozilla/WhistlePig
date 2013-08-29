@@ -23,7 +23,7 @@
                             <strong><time datetime="{{ article.start_time }}">{{ article.start_time.strftime("%Y-%m-%d %H:%M") }} UTC</time></strong>
                         {% endif %}
                         {% if article.duration_minutes %}
-                            <strong>Duration {{ article.duration_minutes}} minutes</strong>
+                            <strong>Duration {{ article.expand_minutes() }}</strong>
                         {% endif %}
                     </p>
                     <p>{{ article.description|linebreaks|safe }}</p>

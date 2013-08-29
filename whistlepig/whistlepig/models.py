@@ -31,6 +31,39 @@ class StatusUpdate(models.Model):
     def get_absolute_url(self):
         return ('article-detail', [self.id])
 
+    def expand_minutes(self):
+        input_minutes = self.duration_minutes
+        hours = input_minutes / 60
+        minutes = input_minutes % 60
+        if hours == 1:
+            hour_string = 'hour'
+        else:
+            hour_string = 'hours'
+
+        if minutes == 1:
+            minute_string = 'minute'
+        else:
+            minute_string = 'minutes'
+
+        if hours > 0 and minutes == 0:
+            return "%s %s" % (
+                    hours,
+                    hour_string
+                    )
+
+        elif hours == 0 and minutes > 0:
+            return "%s %s" % (
+                    minutes,
+                    minute_string
+                    )
+        else:                                                                                                             
+            return "%s %s %s %s" % (
+                    hours,
+                    hour_string,
+                    minutes,
+                    minute_string
+                    )
+
 class Severity(models.Model):
     name = models.CharField(max_length=255, blank=False)
     css_class = models.CharField(max_length=255, blank=False)
