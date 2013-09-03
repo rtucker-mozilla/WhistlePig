@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 import operator
 from django.shortcuts import render
-from whistlepig.whistlepig.models import StatusUpdate
+from whistlepig.whistlepig.models import StatusUpdate, SourceEmailAddress
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
@@ -21,6 +21,11 @@ from forms import OutageNotificationForm
 @staff_member_required
 def admin_send_outage_notification(request, id, template='admin_overrides/admin_outage_notification.html'):
     status_update = get_object_or_404(StatusUpdate, id=id)
+    source_email_address_objects = SourceEmailAddress.objects.all()
+    source_email_addresses = {}
+    for s in source_email_address_objects:
+        source_email_addresses[s.name] = s.short_description
+    source_email_addresses = json.dumps(source_email_addresses);
     message = None
     if request.method == 'POST':
         form = OutageNotificationForm(request.POST, status_update=status_update)
@@ -36,6 +41,7 @@ def admin_send_outage_notification(request, id, template='admin_overrides/admin_
             {
                 'form': form,
                 'message': message,
+                'source_email_addresses': source_email_addresses,
             },
               context_instance=RequestContext(request))
 

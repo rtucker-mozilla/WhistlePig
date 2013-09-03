@@ -18,17 +18,14 @@
 </form>
 <script src='/static/whistlepig/js/jquery-1.7.1.min.js'></script>
 <script>
+    var source_email_address_mappings = {{ source_email_addresses|safe }};
     $(document).ready(function(){
         $("#id_source_email_address").change(function(){
             var message_recipient = ($(this).val());
             var message_body = $('#id_email_message').val();
+            var message_recipient_description = source_email_address_mappings[message_recipient];
             message_body = message_body.replace(/<<source_email_address>>/g, message_recipient)
-            if(message_recipient == 'infra@mozilla.com'){
-                message_body = message_body.replace(/<<source_description>>/g, 'Mozilla IT Operations')
-            }
-            if(message_recipient == 'servicedesk@mozilla.com'){
-                message_body = message_body.replace(/<<source_description>>/g, 'Service Desk')
-            }
+            message_body = message_body.replace(/<<source_description>>/g, message_recipient_description);
             $("#id_email_message").val(message_body);
         });
     });
