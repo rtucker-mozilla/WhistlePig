@@ -91,6 +91,7 @@ class Service(models.Model):
 
 class SourceEmailAddress(models.Model):
     name = models.CharField(max_length=255, blank=False)
+    short_description = models.CharField(max_length=255, blank=False)
 
     def __unicode__(self):
         return self.name
