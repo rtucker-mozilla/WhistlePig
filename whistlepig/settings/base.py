@@ -42,7 +42,7 @@ AUTHENTICATION_BACKENDS = [
     'django_browserid.auth.BrowserIDBackend',
 ]
 
-#SITE_URL = 'http://toolsdev2.dmz.scl3.mozilla.com:8099'
+SITE_URL = 'https://status.mozilla.org'
 LOGIN_URL = '/en-US/admin/login/'
 LOGIN_REDIRECT_URL = '/en-US/admin/whistlepig/statusupdate/'
 LOGIN_REDIRECT_URL_FAILURE = '/en-US/admin/login/'
