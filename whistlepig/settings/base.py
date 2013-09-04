@@ -82,6 +82,9 @@ DOMAIN_METHODS['messages'] = [
 #    # may use.
 #    ('media/js/**.js', 'javascript'),
 # ]
+MIDDLEWARE_CLASSES = list(MIDDLEWARE_CLASSES) + [
+    'whistlepig.middleware.securerequestpropogationmiddleware.SecureRequestPropagationMiddleware',
+    ]
 
 LOGGING = dict(loggers=dict(playdoh={'level': logging.DEBUG}))
 def jinja_url(view_name, *args, **kwargs):
