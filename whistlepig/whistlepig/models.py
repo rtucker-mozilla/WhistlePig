@@ -110,6 +110,15 @@ class Site(models.Model):
     def __unicode__(self):
         return self.name
 
+class StatusUpdateComment(models.Model):
+    author = models.CharField(max_length=255, blank=False)
+    comment = models.TextField(blank=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+    statusupdate = models.ForeignKey('StatusUpdate')
+
+    def __unicode__(self):
+        return "%s - %s" % (self.author, self.created_on)
+
 class DestinationEmailAddress(models.Model):
     name = models.CharField(max_length=255, blank=False)
 

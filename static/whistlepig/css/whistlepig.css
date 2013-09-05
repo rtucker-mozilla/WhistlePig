@@ -1613,3 +1613,14 @@ time {
 a.readmore-js-toggle {
     margin-left: 8px;
 }
+
+.status_update_comment_header {
+    font-weight: bold;
+    border-top-style: dashed;
+    border-top-width: 1px;
+    border-top-color: gray;
+    margin: 0 5px 0 5px;
+}
+.status_update_comment_body {
+    margin: 0 5px 0 5px;
+}

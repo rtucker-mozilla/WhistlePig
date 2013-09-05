@@ -27,6 +27,19 @@
                 <p>Admin Assigned: {{ article.admin_assigned }}</p>
                 <p><strong>Status: {{ article.status }}</strong></p>
                 </section>
+                {% if article.statusupdatecomment_set.all()|length > 0 %}
+                    <h2>Comments</h2>
+                {% endif %}
+                {% for comment in article.statusupdatecomment_set.all() %}
+                <p class='status_update_comment'>
+                <div class='status_update_comment_header'>{{ comment.created_on.strftime("%Y-%m-%d %H:%M") }} PST - {{ comment.author }}</div>
+
+                <div class='status_update_comment_body'>{{ comment.comment|linebreaks|safe }}</div>
+
+                
+                </p>
+                {% endfor %}
+
         <hr class="divider" />
         </article>
     </div>

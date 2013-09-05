@@ -1,11 +1,18 @@
 from django.contrib import admin
-from models import StatusUpdate, Severity, Service, ServiceOutage, Status
+from models import StatusUpdate, StatusUpdateComment, Severity, Service, ServiceOutage, Status
 from models import SourceEmailAddress, DestinationEmailAddress, OutageNotificationTemplate, TimeZone, Site
+class StatusUpdateCommentAdminInline(admin.TabularInline):
+    model = StatusUpdateComment
+
+
 class ServiceOutageAdminInline(admin.TabularInline):
     model = ServiceOutage
 
 class StatusUpdateAdmin(admin.ModelAdmin):
-    inlines = (ServiceOutageAdminInline,)
+    inlines = (
+        ServiceOutageAdminInline,
+        StatusUpdateCommentAdminInline,
+    )
     class Media:
         js = (
                 '/static/whistlepig/js/jquery-1.7.1.min.js',
@@ -24,3 +31,4 @@ admin.site.register(DestinationEmailAddress)
 admin.site.register(OutageNotificationTemplate)
 admin.site.register(TimeZone)
 admin.site.register(Site)
+admin.site.register(StatusUpdateComment)
