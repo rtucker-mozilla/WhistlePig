@@ -4,7 +4,7 @@ from whistlepig.whistlepig.models import StatusUpdate, OutageNotificationTemplat
 
 class OutageNotificationForm(forms.Form):
     source_email_address = forms.ChoiceField(required=True)
-    destination_email_address = forms.ChoiceField(required=True)
+    destination_email_address = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, required=True)
     subject = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'size':'100'}))
     email_message = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":100}))
 
@@ -28,7 +28,7 @@ class OutageNotificationForm(forms.Form):
         for s in SourceEmailAddress.objects.all():
             source_email_addresses.append([s.name,s.name])
 
-        destination_email_addresses = [['', '---Please Select---']]
+        destination_email_addresses = []
         for s in DestinationEmailAddress.objects.all():
             destination_email_addresses.append([s.name,s.name])
         super(OutageNotificationForm, self).__init__(*args, **kwargs)

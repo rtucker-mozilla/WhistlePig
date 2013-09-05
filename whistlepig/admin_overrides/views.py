@@ -33,7 +33,7 @@ def admin_send_outage_notification(request, id, template='admin_overrides/admin_
             cleaned_data = form.clean()
             destination_email_address = cleaned_data['destination_email_address']
             source_email_address = cleaned_data['source_email_address']
-            send_mail(cleaned_data['subject'], cleaned_data['email_message'], source_email_address, [destination_email_address])
+            send_mail(cleaned_data['subject'], cleaned_data['email_message'], source_email_address, destination_email_address)
             message = 'Outage Notification Sent'
     else:
         form = OutageNotificationForm(status_update=status_update)
