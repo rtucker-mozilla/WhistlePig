@@ -131,7 +131,7 @@ def home(request, template='whistlepig/home.html'):
 #def rss(request, template='whistlepig/home.html'):
 
 def get_results_by_month_year(month, year):
-    return StatusUpdate.objects.filter(start_time__year=year, start_time__month=month)
+    return StatusUpdate.objects.filter(start_time__year=year, start_time__month=month).order_by('start_time')
 
 def get_month_of_results(current_month):
 
