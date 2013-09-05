@@ -6,6 +6,15 @@
 <br />
 <br />
 {% endif %}
+{% if not form %}
+Select Outage Notification Template: <select id='outage_notification_select' name='outage_notification_select'>
+    <option value="">---Please Select---</option>
+    {% for o in outage_notification_templates %}
+        <option value="{{ o.id }}">{{ o.name }}</option>
+    {% endfor %}
+
+</select>
+{% else %}
 <form method='post' action='.'>
     {% for field in form %}
         <div class="fieldWrapper">
@@ -14,12 +23,21 @@
         </div>
     {% endfor %}
     {% csrf_token %}
+    <input type='hidden' name='outage_notification_template_id' value='{{ outage_notification_template_id }}' />
     <input style='float: left;' type='submit' class='default' value='Send Notification' />
 </form>
+{% endif %}
 <script src='/static/whistlepig/js/jquery-1.7.1.min.js'></script>
 <script>
     var source_email_address_mappings = {{ source_email_addresses|safe }};
     $(document).ready(function(){
+        $("#outage_notification_select").change(function(){
+            var notification_id = $(this).val();
+            if(notification_id != ''){
+                self.location = location.href + '?notification_template=' + notification_id;
+            }
+
+        });
         $("#id_source_email_address").change(function(){
             var message_recipient = ($(this).val());
             var message_body = $('#id_email_message').val();

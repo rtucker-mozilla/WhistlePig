@@ -22,7 +22,7 @@ class OutageNotificationForm(forms.Form):
         return template
 
     def __init__(self, *args, **kwargs):
-        email_template = OutageNotificationTemplate.objects.get(id=1).outage_notification_template
+        email_template = kwargs.pop('outage_notification_template').outage_notification_template
         status_update = kwargs.pop('status_update', None)
         source_email_addresses = [['', '---Please Select---']]
         for s in SourceEmailAddress.objects.all():

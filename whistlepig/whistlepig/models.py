@@ -126,4 +126,8 @@ class DestinationEmailAddress(models.Model):
         return self.name
 
 class OutageNotificationTemplate(models.Model):
+    name = models.CharField(max_length=255, blank=False)
     outage_notification_template = models.TextField(blank=False)
+
+    def __unicode__(self):
+        return self.name
