@@ -1624,3 +1624,8 @@ a.readmore-js-toggle {
 .status_update_comment_body {
     margin: 0 5px 0 5px;
 }
+
+#search_box {
+    width: 172px;
+
+}
