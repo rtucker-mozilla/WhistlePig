@@ -1,6 +1,6 @@
 from django.contrib import admin
 from models import StatusUpdate, Severity, Service, ServiceOutage, Status
-from models import SourceEmailAddress, DestinationEmailAddress, OutageNotificationTemplate, TimeZone
+from models import SourceEmailAddress, DestinationEmailAddress, OutageNotificationTemplate, TimeZone, Site
 class ServiceOutageAdminInline(admin.TabularInline):
     model = ServiceOutage
 
@@ -23,3 +23,4 @@ admin.site.register(SourceEmailAddress)
 admin.site.register(DestinationEmailAddress)
 admin.site.register(OutageNotificationTemplate)
 admin.site.register(TimeZone)
+admin.site.register(Site)

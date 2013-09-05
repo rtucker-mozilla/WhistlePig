@@ -17,6 +17,8 @@ class OutageNotificationForm(forms.Form):
         template = template.replace('<<issue_duration>>', str(status_update.duration_minutes))
         template = template.replace('<<services>>', ', '.join([s.service.name for s in status_update.serviceoutage_set.all()]))
         template = template.replace('<<summary>>', status_update.description)
+        if status_update.site:
+            template = template.replace('<<issue_site>>', status_update.site.name)
         return template
 
     def __init__(self, *args, **kwargs):
