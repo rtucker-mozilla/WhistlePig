@@ -17,7 +17,7 @@
                 <h2><a href="{{ "article-detail"|url(article.id) }}">{{ article.summary }}</a><span class="bugzilla-id">{% if article.bugzilla_id %}(Bugzilla ID: <a href="{{settings.BUGZILLA_URL}}{{ article.bugzilla_id }}">{{ article.bugzilla_id }}</a>){% endif %}</span></h2>
                 <p>
                     {% if article.start_time %}
-                        <strong><time datetime="{{ article.start_time }}">{{ article.start_time.strftime("%Y-%m-%d %H:%M") }} UTC</time></strong>
+                        <strong><time datetime="{{ article.start_time }}">{{ article.start_time.strftime("%Y-%m-%d %H:%M") }} {{ article.timezone.name }}</time></strong>
                     {% endif %}
                     {% if article.duration_minutes %}
                         <strong>Duration {{ article.expand_minutes() }}</strong>

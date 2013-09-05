@@ -12,6 +12,7 @@ class StatusUpdate(models.Model):
     posted_on = models.DateTimeField(auto_now_add=True)
     severity = models.ForeignKey('Severity')
     status = models.ForeignKey('Status')
+    timezone = models.ForeignKey('TimeZone')
     from_bugzilla = models.BooleanField()
 
     search_fields = (
@@ -92,6 +93,12 @@ class Service(models.Model):
 class SourceEmailAddress(models.Model):
     name = models.CharField(max_length=255, blank=False)
     short_description = models.CharField(max_length=255, blank=False)
+
+    def __unicode__(self):
+        return self.name
+
+class TimeZone(models.Model):
+    name = models.CharField(max_length=255, blank=False)
 
     def __unicode__(self):
         return self.name
