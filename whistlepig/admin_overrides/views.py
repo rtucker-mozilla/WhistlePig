@@ -44,7 +44,8 @@ def admin_send_outage_notification(request, id, template='admin_overrides/admin_
             source_email_address = cleaned_data['source_email_address']
             text_message = email_message
             html_message = "<html><head></head><body><pre>%s</pre></body></html>" % text_message
-            send_mail(cleaned_data['subject'], text_message, source_email_address, destination_email_address, html_message = html_message)
+            #send_mail(cleaned_data['subject'], text_message, source_email_address, destination_email_address, html_message = html_message)
+            send_mail(cleaned_data['subject'], text_message, source_email_address, destination_email_address)
             message = 'Outage Notification Sent'
     elif outage_notification_template_id:
         form = OutageNotificationForm(status_update=status_update, outage_notification_template=outage_notification_template)
