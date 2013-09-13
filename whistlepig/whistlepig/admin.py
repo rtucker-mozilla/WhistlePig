@@ -17,9 +17,13 @@ class StatusUpdateAdmin(admin.ModelAdmin):
         js = (
                 '/static/whistlepig/js/jquery-1.7.1.min.js',
                 '/static/whistlepig/js/statusupdate.js',
-                
             )
     
+class OutageNotificationAdmin(admin.ModelAdmin):
+    class Media:
+        css = {
+            'all': ('/static/whistlepig/css/outagenotification.css',)
+        }
 
 admin.site.register(StatusUpdate, StatusUpdateAdmin)
 admin.site.register(Severity)
@@ -28,7 +32,7 @@ admin.site.register(Status)
 admin.site.register(ServiceOutage)
 admin.site.register(SourceEmailAddress)
 admin.site.register(DestinationEmailAddress)
-admin.site.register(OutageNotificationTemplate)
+admin.site.register(OutageNotificationTemplate, OutageNotificationAdmin)
 admin.site.register(TimeZone)
 admin.site.register(Site)
 admin.site.register(StatusUpdateComment)
