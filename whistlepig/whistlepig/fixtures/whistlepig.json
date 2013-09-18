@@ -1,1 +1,177 @@
-[{"pk": 1, "model": "whistlepig.statusupdate", "fields": {"status": 1, "bugzilla_id": "123456", "description": "This is a live test from the database", "posted_by": "Matthew Zeier", "from_bugzilla": false, "summary": "Vidyo Maintenance Notice", "created_on": "2012-09-21T08:43:10", "posted_on": "2012-09-21T08:43:10", "admin_assigned": "Matthew Zeier", "severity": 1}}, {"pk": 2, "model": "whistlepig.statusupdate", "fields": {"status": 1, "bugzilla_id": "", "description": "This is just a notice, no downtime, from database", "posted_by": "Rob Tucker", "from_bugzilla": false, "summary": "Status update 2, no downtime", "created_on": "2012-09-21T08:43:37", "posted_on": "2012-09-21T08:43:37", "admin_assigned": "Rob Tucker", "severity": 2}}, {"pk": 3, "model": "whistlepig.statusupdate", "fields": {"status": 1, "bugzilla_id": "123456", "description": "asdfasdfafasfdasfsfd", "posted_by": "Rob Tucker", "from_bugzilla": false, "summary": "test for september", "created_on": "2012-09-21T10:12:22", "posted_on": "2012-09-04T00:00:00", "admin_assigned": "Rob Tucker", "severity": 2}}, {"pk": 6, "model": "whistlepig.statusupdate", "fields": {"status": 1, "bugzilla_id": "123456", "description": "asdfasdfafasfdasfsfd", "posted_by": "Rob Tucker", "from_bugzilla": false, "summary": "test for july", "created_on": "2012-09-21T10:20:56", "posted_on": "2012-07-06T00:00:00", "admin_assigned": "Rob Tucker", "severity": 2}}, {"pk": 7, "model": "whistlepig.statusupdate", "fields": {"status": 1, "bugzilla_id": "123456", "description": "asdfasdfafasfdasfsfd", "posted_by": "Rob Tucker", "from_bugzilla": false, "summary": "test for july 2", "created_on": "2012-09-21T10:21:03", "posted_on": "2012-07-04T00:00:00", "admin_assigned": "Rob Tucker", "severity": 2}}, {"pk": 8, "model": "whistlepig.statusupdate", "fields": {"status": 1, "bugzilla_id": "", "description": "This is a test description. whoohooo", "posted_by": "Rob Tucker", "from_bugzilla": false, "summary": "Test Market Place Notification", "created_on": "2013-06-05T06:17:28", "posted_on": "2013-06-05T06:17:28", "admin_assigned": "Rob Tucker", "severity": 1}}, {"pk": 9, "model": "whistlepig.statusupdate", "fields": {"status": 1, "bugzilla_id": "", "description": "Multiple services are down due to major network outage in our PHX1 data center", "posted_by": "cshields", "from_bugzilla": false, "summary": "PHX1 Network outage", "created_on": "2013-06-05T06:28:42", "posted_on": "2013-06-05T06:28:42", "admin_assigned": "cshields", "severity": 1}}, {"pk": 1, "model": "whistlepig.severity", "fields": {"css_class": "emergency", "name": "Emergency"}}, {"pk": 2, "model": "whistlepig.severity", "fields": {"css_class": "no-downtime", "name": "No Downtime"}}, {"pk": 1, "model": "whistlepig.status", "fields": {"name": "Active"}}, {"pk": 2, "model": "whistlepig.status", "fields": {"name": "Resolved"}}, {"pk": 3, "model": "whistlepig.status", "fields": {"name": "Upcoming"}}, {"pk": 4, "model": "whistlepig.serviceoutage", "fields": {"service": 1, "status_update": 9}}, {"pk": 5, "model": "whistlepig.serviceoutage", "fields": {"service": 2, "status_update": 9}}, {"pk": 1, "model": "whistlepig.service", "fields": {"name": "Marketplace"}}, {"pk": 2, "model": "whistlepig.service", "fields": {"name": "Product Delivery"}}]
+[
+  {
+    "pk": 6, 
+    "model": "whistlepig.statusupdate", 
+    "fields": {
+      "status": 1, 
+      "bugzilla_id": "123456", 
+      "from_bugzilla": false, 
+      "description": "Multiple services are down due to major network outage in our PHX1 data center", 
+      "posted_by": "cshields", 
+      "created_on": "2012-09-21T10:20:56", 
+      "summary": "test for july", 
+      "duration_minutes": 30, 
+      "posted_on": "2012-07-06T00:00:00", 
+      "site": 1, 
+      "timezone": 1, 
+      "start_time": "2013-07-28T07:25:00", 
+      "admin_assigned": "Rob Tucker", 
+      "severity": 1
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "whistlepig.statusupdate", 
+    "fields": {
+      "status": 2, 
+      "bugzilla_id": "", 
+      "from_bugzilla": false, 
+      "description": "This is a live test from the database", 
+      "posted_by": "rtucker", 
+      "created_on": "2013-09-05T12:46:46", 
+      "summary": "test", 
+      "duration_minutes": null, 
+      "posted_on": "2013-09-05T12:46:46", 
+      "site": 1, 
+      "timezone": 2, 
+      "start_time": "2013-05-05T15:46:21", 
+      "admin_assigned": "rtucker", 
+      "severity": 2
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "whistlepig.severity", 
+    "fields": {
+      "css_class": "emergency", 
+      "name": "Emergency"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "whistlepig.severity", 
+    "fields": {
+      "css_class": "no-downtime", 
+      "name": "No Downtime"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "whistlepig.severity", 
+    "fields": {
+      "css_class": "downtime-expected", 
+      "name": "Downtime Expected"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "whistlepig.status", 
+    "fields": {
+      "name": "Active"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "whistlepig.status", 
+    "fields": {
+      "name": "Resolved"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "whistlepig.status", 
+    "fields": {
+      "name": "Upcoming"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "whistlepig.serviceoutage", 
+    "fields": {
+      "service": 1, 
+      "status_update": 6
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "whistlepig.serviceoutage", 
+    "fields": {
+      "service": 2, 
+      "status_update": 6
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "whistlepig.service", 
+    "fields": {
+      "name": "Marketplace"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "whistlepig.service", 
+    "fields": {
+      "name": "Product Delivery"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "whistlepig.sourceemailaddress", 
+    "fields": {
+      "short_description": "Mozilla IT Operations", 
+      "name": "infra@mozilla.com"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "whistlepig.sourceemailaddress", 
+    "fields": {
+      "short_description": "Mozilla Service Desk", 
+      "name": "servicedesk@mozilla.com"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "whistlepig.timezone", 
+    "fields": {
+      "name": "PST"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "whistlepig.timezone", 
+    "fields": {
+      "name": "UTC"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "whistlepig.site", 
+    "fields": {
+      "name": "PHX1"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "whistlepig.destinationemailaddress", 
+    "fields": {
+      "name": "rtucker@mozilla.com"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "whistlepig.outagenotificationtemplate", 
+    "fields": {
+      "outage_notification_template": "Mozilla  IT Operations Maintenance Notification:\r\n----------------------------------------------------------------------\r\n<<issue_status_description>>\r\nISSUE  STATUS:     <<issue_status>>\r\nBUG IDS:           <<bug_ids>>\r\nDATE:              <<issue_date>>\r\nSTART TIME:        <<issue_start_time>>\r\nDURATION:          <<issue_duration>>\r\nSITE:              <<issue_site>>\r\nSERVICES:          <<services>>\r\nTYPE OF WORK:      <<type_of_work>>\r\nIMPACT OF WORK:    <<summary>>    \r\n\r\nIf you have any questions or concerns please address them to\r\n<<source_email_address>>\r\n----------------------------------------------------------------------\r\n<<source_description>> - <<source_email_address>>", 
+      "name": "IT Maintenance Notification"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "whistlepig.outagenotificationtemplate", 
+    "fields": {
+      "outage_notification_template": "Service Desk Emergency Notification:\r\n----------------------------------------------------------------------\r\n<<issue_status_description>>\r\nISSUE  STATUS:        <<issue_status>>\r\nBUG IDS:              <<bug_ids>>\r\nDATE:                 <<issue_date>>\r\nSTART TIME:           <<issue_start_time>>\r\nDURATION:             <<issue_duration>>\r\nSITE:                 <<issue_site>>\r\nSERVICES:             <<services>>\r\nTYPE OF WORK:         <<type_of_work>>\r\nIMPACT OF WORK:       <<summary>>    \r\n\r\nIf you have any questions or concerns please address them to\r\n<<source_email_address>>\r\n----------------------------------------------------------------------\r\n<<source_description>> - <<source_email_address>>", 
+      "name": "Service Now Emergency Template"
+    }
+  }
+]
