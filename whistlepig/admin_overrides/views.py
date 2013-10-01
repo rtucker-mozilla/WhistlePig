@@ -38,6 +38,7 @@ def admin_send_outage_notification(request, id, template='admin_overrides/admin_
     message = None
     if request.method == 'POST':
         outage_notification_template = OutageNotificationTemplate.objects.get(id=request.POST.get('outage_notification_template_id'))
+        outage_notification_template_id = outage_notification_template.id
         form = OutageNotificationForm(request.POST, status_update=status_update, outage_notification_template=outage_notification_template)
         if form.is_valid():
             cleaned_data = form.clean()
@@ -63,6 +64,7 @@ def admin_send_outage_notification(request, id, template='admin_overrides/admin_
             msg.attach_alternative(html_message, "text/html")
             msg.send()
             message = 'Outage Notification Sent'
+
     elif outage_notification_template_id:
         form = OutageNotificationForm(status_update=status_update, outage_notification_template=outage_notification_template)
     else:
