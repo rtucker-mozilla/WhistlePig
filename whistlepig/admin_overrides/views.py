@@ -45,7 +45,19 @@ def admin_send_outage_notification(request, id, template='admin_overrides/admin_
             email_message = cleaned_data['email_message']
             subject = cleaned_data['subject']
             text_content = email_message
-            html_message = "<html><head></head><body><pre style='white-space: pre; font-family: monospace;'>%s</pre></body></html>" % text_content
+            html_message = """<html>
+            <head>
+            <style type='text/css'>
+            pre {
+                white-space: pre-wrap; /* css-3 /
+                white-space: -moz-pre-wrap; / Mozilla, since 1999 /
+                white-space: -pre-wrap; / Opera 4-6 /
+                white-space: -o-pre-wrap; / Opera 7 /
+                word-wrap: break-word; / Internet Explorer 5.5+ */
+                font-family: monospace;
+            }
+            </style>
+            </head><body><pre>%s</pre></body></html>""" % text_content
             source_email_address = cleaned_data['source_email_address']
             msg = EmailMultiAlternatives(subject, text_content, source_email_address, destination_email_address)
             msg.attach_alternative(html_message, "text/html")
