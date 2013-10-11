@@ -1,5 +1,6 @@
 from django.db import models
 import re
+from django.conf import settings
 
 class StatusUpdate(models.Model):
     summary = models.CharField(max_length=255, blank=False)
@@ -41,6 +42,20 @@ class StatusUpdate(models.Model):
     @property
     def services(self):
         return ", ".join([s.service.name for s in self.serviceoutage_set.all()])
+
+    @property
+    def bugzilla_links(self):
+        ret_string = ''
+        bugs = self.bugzilla_id
+        bugs = bugs.replace(' ','')
+        bugs = bugs.split(',')
+        counter = 1
+        for bug in bugs:
+            ret_string += '<a href="%s%s">%s</a>' % (settings.BUGZILLA_URL, bug, bug)
+            if counter < len(bugs):
+                ret_string += ', '
+            counter += 1
+        return ret_string
 
     @models.permalink
     def get_absolute_url(self):
