@@ -46,7 +46,7 @@ class StatusUpdate(models.Model):
     @property
     def bugzilla_links(self):
         ret_string = ''
-        bugs = self.bugizilla_id.replace(' ','')
+        bugs = self.bugzilla_id.replace(' ','')
         bugs = bugs.split(',')
         counter = 1
         for bug in bugs:
