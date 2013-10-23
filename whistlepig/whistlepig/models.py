@@ -46,8 +46,7 @@ class StatusUpdate(models.Model):
     @property
     def bugzilla_links(self):
         ret_string = ''
-        bugs = self.bugzilla_id
-        bugs = bugs.replace(' ','')
+        bugs = self.bugizilla_id.replace(' ','')
         bugs = bugs.split(',')
         counter = 1
         for bug in bugs:
@@ -159,6 +158,7 @@ class DestinationEmailAddress(models.Model):
 class OutageNotificationTemplate(models.Model):
     interpolated_variable_hash = {}
     name = models.CharField(max_length=255, blank=False)
+    subject = models.CharField(max_length=255, blank=False)
     outage_notification_template = models.TextField(blank=False)
 
     def extract_variable_to_interpolate(self, input_line):
@@ -174,33 +174,27 @@ class OutageNotificationTemplate(models.Model):
             return rethash
 
 
-
-
-    def interpolate_template(self, status_update = None, template = None):
+    def interpolate(self, status_update, template):
         self.status_update = status_update
-        if not template:
-            template = self.outage_notification_template
         for line in template.split():
             self.extract_variable_to_interpolate(line)
         for k in self.interpolated_variable_hash.iterkeys():
             try:
                 template = template.replace(k, str(getattr(status_update, self.interpolated_variable_hash[k])))
-                #print "%s found" % self.interpolated_variable_hash[k]
             except (AttributeError):
-                #print "%s not found" % self.interpolated_variable_hash[k]
                 pass
         return template
-        #template = template.replace('<<issue_status_description>>', status_update.summary)
-        #template = template.replace('<<issue_status>>', status_update.status.name)
-        #template = template.replace('<<bug_ids>>', status_update.bugzilla_id)
-        #template = template.replace('<<issue_date>>', status_update.start_time.strftime("%Y-%m-%d"))
-        #template = template.replace('<<issue_start_time>>', status_update.start_time.strftime("%H:%M UTC"))
-        #template = template.replace('<<issue_duration>>', str(status_update.duration_minutes))
-        #template = template.replace('<<services>>', ', '.join([s.service.name for s in status_update.serviceoutage_set.all()]))
-        #template = template.replace('<<summary>>', status_update.description)
-        #if status_update.site:
-        #    template = template.replace('<<issue_site>>', status_update.site.name)
-        #return template
+
+    def interpolate_subject(self, status_update = None, template = None):
+        if not template:
+            template = self.subject
+        return self.interpolate(status_update, template)
+
+    def interpolate_template(self, status_update = None, template = None):
+        self.status_update = status_update
+        if not template:
+            template = self.outage_notification_template
+        return self.interpolate(status_update, template)
 
     def __init__(self, *args, **kwargs):
         self.interpolated_variable_hash = {}

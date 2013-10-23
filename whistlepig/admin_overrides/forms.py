@@ -23,7 +23,8 @@ class OutageNotificationForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         status_update = kwargs.pop('status_update', None)
-        email_template = kwargs.pop('outage_notification_template').interpolate_template(status_update = status_update)
+        outage_notification_template = kwargs.pop('outage_notification_template')
+        email_template = outage_notification_template.interpolate_template(status_update = status_update)
         source_email_addresses = [['', '---Please Select---']]
         for s in SourceEmailAddress.objects.all():
             source_email_addresses.append([s.name,s.name])
@@ -34,7 +35,10 @@ class OutageNotificationForm(forms.Form):
         super(OutageNotificationForm, self).__init__(*args, **kwargs)
         self.fields['source_email_address'].choices = source_email_addresses
         self.fields['destination_email_address'].choices = destination_email_addresses
-        self.fields['subject'].initial = "[OUTAGE NOTIFICATION] %s" % status_update.summary
+        if outage_notification_template.subject and outage_notification_template.subject != '':
+            self.fields['subject'].initial = outage_notification_template.interpolate_subject(status_update = status_update)
+        else:
+            self.fields['subject'].initial = "[OUTAGE NOTIFICATION] %s" % status_update.summary
         self.fields['email_message'].initial = email_template
 
 
