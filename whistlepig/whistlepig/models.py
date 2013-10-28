@@ -16,7 +16,7 @@ class StatusUpdate(models.Model):
     posted_on = models.DateTimeField(auto_now_add=True)
     severity = models.ForeignKey('Severity')
     status = models.ForeignKey('Status')
-    frontpage = models.BooleanField(default = True)
+    frontpage = models.BooleanField('Display on Homepage', default = True)
     timezone = models.ForeignKey('TimeZone')
     site = models.ForeignKey('Site', null=True)
     from_bugzilla = models.BooleanField()

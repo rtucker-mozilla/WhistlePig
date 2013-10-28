@@ -95,7 +95,7 @@ def home(request, template='whistlepig/home.html'):
         will be the baseline for other months
     """
     try:
-        most_recent = StatusUpdate.objects.all().order_by('-start_time')[0]
+        most_recent = StatusUpdate.objects.all().filter(frontpage = True).order_by('-start_time')[0]
         status_updates_found = True
     except IndexError:
         """
@@ -131,12 +131,12 @@ def home(request, template='whistlepig/home.html'):
 #def rss(request, template='whistlepig/home.html'):
 
 def get_results_by_month_year(month, year):
-    return StatusUpdate.objects.filter(start_time__year=year, start_time__month=month).order_by('start_time')
+    return StatusUpdate.objects.filter(frontpage = True).filter(start_time__year=year, start_time__month=month).order_by('start_time')
 
 def get_month_of_results(current_month):
 
     try:
-        most_recent = StatusUpdate.objects.filter(start_time__lte=current_month).order_by('-start_time')[0]
+        most_recent = StatusUpdate.objects.filter(frontpage = True).filter(start_time__lte=current_month).order_by('-start_time')[0]
     except IndexError:
         ### No results for this page
         return None

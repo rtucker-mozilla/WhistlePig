@@ -42,6 +42,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^browserid/', include('django_browserid.urls')),
     (r'^api[/]', include('whistlepig.api.urls')),
+    #(r'^ical/feed/$', iCalEntriesFeed()),
     (r'^ical/feed/$', iCalEntriesFeed()),
 )
 
