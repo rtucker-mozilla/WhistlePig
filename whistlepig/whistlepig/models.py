@@ -3,17 +3,20 @@ import re
 from django.conf import settings
 
 class StatusUpdate(models.Model):
-    summary = models.CharField(max_length=255, blank=False)
+    summary = models.CharField('Short Summary', max_length=255, blank=False)
     posted_by = models.CharField(max_length=255, blank=False)
     duration_minutes = models.IntegerField(null = True, blank=True)
     admin_assigned = models.CharField(max_length=255, blank=False)
     bugzilla_id = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=False)
+    impact_of_work = models.TextField(blank=False)
     created_on = models.DateTimeField(auto_now_add=True)
     start_time = models.DateTimeField(null=False, blank=False)
+    end_time = models.DateTimeField(null=True, blank=True)
     posted_on = models.DateTimeField(auto_now_add=True)
     severity = models.ForeignKey('Severity')
     status = models.ForeignKey('Status')
+    frontpage = models.BooleanField(default = True)
     timezone = models.ForeignKey('TimeZone')
     site = models.ForeignKey('Site', null=True)
     from_bugzilla = models.BooleanField()
