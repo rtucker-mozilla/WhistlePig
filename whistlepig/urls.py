@@ -13,6 +13,8 @@ patch()
 #
 #    AttributeError: 'CompressorExtension' object has no attribute 'nodelist'
 #
+from ical.ical_entries_feed import iCalEntriesFeed
+
 from jingo_offline_compressor.jinja2ext import CompressorExtension
 import jingo
 try:
@@ -40,6 +42,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^browserid/', include('django_browserid.urls')),
     (r'^api[/]', include('whistlepig.api.urls')),
+    (r'^ical/feed/$', iCalEntriesFeed()),
 )
 
 ## In DEBUG mode, serve media files through Django.
