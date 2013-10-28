@@ -1,3 +1,6 @@
 [submodule "vendor"]
 	path = vendor
 	url = git://github.com/mozilla/playdoh-lib.git
+[submodule "vendor-local/src/django-cal"]
+	path = vendor-local/src/django-cal
+	url = git://github.com/statesofpop/django-cal
