@@ -1,0 +1,31 @@
+import datetime
+import django_cal
+from django_cal.views import Events
+import dateutil.rrule as rrule
+
+class iCalEntriesFeed(Events):
+    def items(self):
+        return ["Whattaday!", "meow"]
+
+    def cal_name(self):
+        return "a pretty calendar."
+
+    def cal_desc(self):
+        return "Lorem ipsum tralalala."
+
+    def item_summary(self, item):
+        return "That was suchaday!"
+
+    def item_start(self, item):
+        return datetime.date(year=2011, month=1, day=24)
+
+    def item_end(self, item):
+        return datetime.date(year=2011, month=1, day=26)
+
+    def item_rruleset(self, item):
+        rruleset = rrule.rruleset()
+        rruleset.rrule(rrule.YEARLY, dtstart=self.item_start(item))
+        return rruleset
+
+    def item_categories(self, item):
+        return ["Family", "Birthdays"]
