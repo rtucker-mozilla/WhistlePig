@@ -20,6 +20,9 @@ class iCalEntriesFeed(Events):
     def item_summary(self, item):
         return item.summary
 
+    def item_description(self, item):
+        return item.description
+
     def get_time_as_utc(self, input_time, item):
         utc_tz = pytz.timezone('UTC')
         pacific_tz = pytz.timezone('America/Los_Angeles')
