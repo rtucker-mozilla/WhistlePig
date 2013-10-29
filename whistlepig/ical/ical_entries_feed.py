@@ -22,16 +22,22 @@ class iCalEntriesFeed(Events):
 
     def get_time_as_utc(self, input_time, item):
         utc_tz = pytz.timezone('UTC')
+        pacific_tz = pytz.timezone('America/Los_Angeles')
+        tmp = datetime.datetime(
+                input_time.year,
+                input_time.month,
+                input_time.day,
+                input_time.hour,
+                input_time.minute,
+                input_time.second)
         if item.timezone.name != u'UTC':
-            tz = pytz.timezone('US/Pacific')
-            tmp = datetime.datetime(
+            tmp = pacific_tz.localize(datetime.datetime(
                     input_time.year,
                     input_time.month,
                     input_time.day,
                     input_time.hour,
                     input_time.minute,
-                    input_time.second,
-                    tzinfo = tz)
+                    input_time.second))
         else:
             tmp = datetime.datetime(
                     input_time.year,
@@ -39,8 +45,7 @@ class iCalEntriesFeed(Events):
                     input_time.day,
                     input_time.hour,
                     input_time.minute,
-                    input_time.second,
-                    tzinfo = utc_tz)
+                    input_time.second)
         return tmp.astimezone(utc_tz)
 
     def item_start(self, item):
