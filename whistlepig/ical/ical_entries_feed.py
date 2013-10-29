@@ -39,13 +39,13 @@ class iCalEntriesFeed(Events):
                     input_time.minute,
                     input_time.second))
         else:
-            tmp = datetime.datetime(
+            tmp = utc_tz.localize(datetime.datetime(
                     input_time.year,
                     input_time.month,
                     input_time.day,
                     input_time.hour,
                     input_time.minute,
-                    input_time.second)
+                    input_time.second))
         return tmp.astimezone(utc_tz)
 
     def item_start(self, item):
