@@ -28,16 +28,16 @@
                     </p>
                     <p>{{ article.description|linebreaks|safe }}</p>
                     <p>Admin Assigned: {{ article.admin_assigned }}</p>
+                    {% if article.impact_of_work %}
+                       <p><strong>Impact of Work</strong>:
+                           {{ article.impact_of_work|linebreaks|safe }}
+                       </p>
+                    {% endif %}
                     {% if article.serviceoutage_set.count() > 0 %}
                     <p><strong>Services Affected</strong>:
                      {% for p in article.serviceoutage_set.all() %}
                         {{ p.service.name }}{% if not loop.last %},{% endif %}
                      {% endfor %}
-                     {% if article.impact_of_work %}
-                        <p><strong>Impact of Work</strong>:
-                            {{ article.impact_of_work }}
-                        </p>
-                     {% endif %}
                     </p>
                     {% endif %}
                     </section>
