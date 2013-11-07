@@ -24,6 +24,11 @@
                     {% endif %}
                 </p>
                 <p>{{ article.description|linebreaks|safe }}</p>
+                {% if article.impact_of_work %}
+                    <p><strong>Impact of Work</strong>:
+                        {{ article.impact_of_work }}
+                    </p>
+                {% endif %}
                 <p>Admin Assigned: {{ article.admin_assigned }}</p>
                 <p><strong>Status: {{ article.status }}</strong></p>
                 </section>

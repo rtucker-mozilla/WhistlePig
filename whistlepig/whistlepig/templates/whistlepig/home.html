@@ -33,6 +33,11 @@
                      {% for p in article.serviceoutage_set.all() %}
                         {{ p.service.name }}{% if not loop.last %},{% endif %}
                      {% endfor %}
+                     {% if article.impact_of_work %}
+                        <p><strong>Impact of Work</strong>:
+                            {{ article.impact_of_work }}
+                        </p>
+                     {% endif %}
                     </p>
                     {% endif %}
                     </section>
