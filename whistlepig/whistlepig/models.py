@@ -36,7 +36,7 @@ class StatusUpdate(models.Model):
         matches = re.findall(regex, input_val)
         if matches:
             for m in matches:
-                input_val = re.sub('[B|b]ug %s' % m, "<a href='https://bugzil.la/%s'>%s</a>" % (m, m), input_val)
+                input_val = re.sub('[B|b]ug %s' % m, "<a href='https://bugzil.la/%s'>Bug %s</a>" % (m, m), input_val)
         return input_val
 
     def expand(self, input_val):
