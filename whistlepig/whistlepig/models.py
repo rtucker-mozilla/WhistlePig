@@ -31,6 +31,30 @@ class StatusUpdate(models.Model):
             'serviceoutage__service__name',
     )
 
+    def expand_bug(self, input_val):
+        regex = '[B|b]ug (\d+)'
+        matches = re.findall(regex, input_val)
+        if matches:
+            for m in matches:
+                input_val = re.sub('[B|b]ug %s' % m, "<a href='https://bugzil.la/%s'>%s</a>" % (m, m), input_val)
+        return input_val
+
+    def expand(self, input_val):
+        input_val = self.expand_bug(input_val)
+        return input_val
+
+    @property
+    def impact_of_work_expanded(self):
+        return self.expand(self.impact_of_work)
+
+    @property
+    def summary_expanded(self):
+        return self.expand(self.summary)
+
+    @property
+    def description_expanded(self):
+        return self.expand(self.description)
+
     def __unicode__(self):
         return self.summary
 

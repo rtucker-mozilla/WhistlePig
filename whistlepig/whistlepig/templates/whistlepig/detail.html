@@ -12,9 +12,9 @@
     <div class="row">
       {% include "whistlepig/sidebar.html" ignore missing with context %}
       <article id="top" class="announcements-panel span7">
-        <h1 class="period-header">{{ article.summary }}</h1>
+        <h1 class="period-header">{{ article.summary_expanded }}</h1>
                 <section class="period-data {{ article.severity.css_class }}">
-                <h2><a href="{{ "article-detail"|url(article.id) }}">{{ article.summary }}</a><span class="bugzilla-id">{% if article.bugzilla_id %}(Bugzilla ID: {{article.bugzilla_links|safe }}){% endif %}</span></h2>
+                <h2><a href="{{ "article-detail"|url(article.id) }}">{{ article.summary_expanded }}</a><span class="bugzilla-id">{% if article.bugzilla_id %}(Bugzilla ID: {{article.bugzilla_links|safe }}){% endif %}</span></h2>
                 <p>
                     {% if article.start_time %}
                         <strong><time datetime="{{ article.start_time }}">{{ article.start_time.strftime("%Y-%m-%d %H:%M") }} {{ article.timezone.name }}</time></strong>
@@ -23,8 +23,8 @@
                         <strong>Duration {{ article.expand_minutes() }}</strong>
                     {% endif %}
                 </p>
-                <p>{{ article.description|linebreaks|safe }}</p>
-                {% if article.impact_of_work %}
+                <p>{{ article.description_expanded|linebreaks|safe }}</p>
+                {% if article.impact_of_work_expanded|safe %}
                     <p><strong>Impact of Work</strong>:
                          {{ article.impact_of_work|linebreaks|safe }}
                     </p>
