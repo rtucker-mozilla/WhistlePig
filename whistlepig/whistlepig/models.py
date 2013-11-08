@@ -43,6 +43,14 @@ class StatusUpdate(models.Model):
         return self.start_time.strftime("%H:%M")
 
     @property
+    def event_end_date(self):
+        return self.end_time.strftime("%Y-%m-%d")
+    
+    @property
+    def event_end_time(self):
+        return self.end_time.strftime("%H:%M")
+    
+    @property
     def services(self):
         return ", ".join([s.service.name for s in self.serviceoutage_set.all()])
 
