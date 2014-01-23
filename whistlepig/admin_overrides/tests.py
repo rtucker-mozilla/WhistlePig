@@ -31,31 +31,31 @@ class AdminOverrideTest(TestCase):
         self.assertTrue('additional_email_addresses' in response.context['form'].fields)
 
     def test2_get_dest_emails_with_additional_emails_none(self):
-        ret_emails = get_dest_emails('foo@bar.com', None)
+        ret_emails = get_dest_emails(['foo@bar.com'], None)
         self.assertEqual(ret_emails, ['foo@bar.com'])
 
     def test3_get_dest_emails_with_additional_emails_empty(self):
-        ret_emails = get_dest_emails('foo@bar.com', [])
+        ret_emails = get_dest_emails(['foo@bar.com'], [])
         self.assertEqual(ret_emails, ['foo@bar.com'])
 
     def test4_get_dest_emails_with_additional_emails_blank(self):
-        ret_emails = get_dest_emails('foo@bar.com', '')
+        ret_emails = get_dest_emails(['foo@bar.com'], '')
         self.assertEqual(ret_emails, ['foo@bar.com'])
 
     def test5_get_dest_emails_with_additional_emails(self):
         # Check for a single additional email
-        ret_emails = get_dest_emails('foo@bar.com', 'abc@foo.com')
+        ret_emails = get_dest_emails(['foo@bar.com'], 'abc@foo.com')
         self.assertEqual(ret_emails, ['foo@bar.com', 'abc@foo.com'])
 
         # Check for multiple emails separated by a space
-        ret_emails = get_dest_emails('foo@bar.com',
+        ret_emails = get_dest_emails(['foo@bar.com'],
                                      'abc@foo.com, abc2@foo.com')
         self.assertEqual(ret_emails, ['foo@bar.com',
                                       'abc@foo.com',
                                       'abc2@foo.com'])
 
         # Check for multiple emails separated by multiple spaces
-        ret_emails = get_dest_emails('foo@bar.com','abc@foo.com,   abc2@foo.com,'
+        ret_emails = get_dest_emails(['foo@bar.com'],'abc@foo.com,   abc2@foo.com,'
                                                    'abc3@foo.com')
         self.assertEqual(ret_emails, ['foo@bar.com',
                                       'abc@foo.com',
@@ -63,5 +63,5 @@ class AdminOverrideTest(TestCase):
                                       'abc3@foo.com'])
 
         # Check for multiple emails not separated by a space
-        ret_emails = get_dest_emails('foo@bar.com', 'abc@foo.com,abc2@foo.com')
-        self.assertEqual(ret_emails, ['foo@bar.com', 'abc@foo.com', 'abc2@foo.com'])
+        ret_emails = get_dest_emails(['asdf@bar.com', 'foo@bar.com'], 'abc@foo.com,abc2@foo.com')
+        self.assertEqual(ret_emails, ['asdf@bar.com', 'foo@bar.com', 'abc@foo.com', 'abc2@foo.com'])
