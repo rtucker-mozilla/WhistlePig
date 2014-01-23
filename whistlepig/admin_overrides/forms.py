@@ -5,6 +5,7 @@ from whistlepig.whistlepig.models import StatusUpdate, OutageNotificationTemplat
 class OutageNotificationForm(forms.Form):
     source_email_address = forms.ChoiceField(required=True)
     destination_email_address = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, required=True)
+    additional_email_addresses = forms.CharField(max_length=128, required=False)
     subject = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'size':'100'}))
     email_message = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":100}))
 

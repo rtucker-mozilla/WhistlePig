@@ -17,6 +17,7 @@ import datetime
 from django.contrib.admin.views.decorators import staff_member_required
 from forms import OutageNotificationForm
 from django.core.mail import EmailMultiAlternatives
+from .models import get_dest_emails
 
 
 
@@ -43,6 +44,7 @@ def admin_send_outage_notification(request, id, template='admin_overrides/admin_
         if form.is_valid():
             cleaned_data = form.clean()
             destination_email_address = cleaned_data['destination_email_address']
+            additional_email_addresses = cleaned_data['additional_email_addresses']
             email_message = cleaned_data['email_message']
             subject = cleaned_data['subject']
             text_content = email_message
@@ -60,7 +62,10 @@ def admin_send_outage_notification(request, id, template='admin_overrides/admin_
             </style>
             </head><body><pre>%s</pre></body></html>""" % text_content
             source_email_address = cleaned_data['source_email_address']
-            msg = EmailMultiAlternatives(subject, text_content, source_email_address, destination_email_address)
+            destination_email_addresses = get_dest_emails(
+                destination_email_address, additional_email_addresses
+            )
+            msg = EmailMultiAlternatives(subject, text_content, source_email_address, destination_email_addresses)
             msg.attach_alternative(html_message, "text/html")
             msg.send()
             message = 'Outage Notification Sent'
