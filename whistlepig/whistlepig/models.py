@@ -31,6 +31,9 @@ class StatusUpdate(models.Model):
             'serviceoutage__service__name',
     )
 
+    class Meta:
+        verbose_name_plural = 'Status Updates'
+
     def expand_bug(self, input_val):
         regex = '[B|b]ug (\d+)'
         matches = re.findall(regex, input_val)
@@ -135,6 +138,9 @@ class Severity(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = 'Severeties'
+
 class Status(models.Model):
     name = models.CharField(max_length=255, blank=False)
 
@@ -143,12 +149,21 @@ class Status(models.Model):
 
     def __repr__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = 'Statuses'
+
+
 class ServiceOutage(models.Model):
     status_update = models.ForeignKey('StatusUpdate')
     service = models.ForeignKey('Service')
 
     def __unicode__(self):
         return "%s - %s" % (self.status_update, self.service)
+
+    class Meta:
+        verbose_name_plural = 'Service Outages'
+
 
 class Service(models.Model):
     name = models.CharField(max_length=255, blank=False)
