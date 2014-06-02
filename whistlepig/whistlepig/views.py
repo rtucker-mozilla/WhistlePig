@@ -70,8 +70,11 @@ def calendar(request, template='whistlepig/calendar.html'):
         filters = [Q(**{"%s__icontains" % t: search})
                         for t in StatusUpdate.search_fields]
 
-        data['search_results'] = StatusUpdate.objects.filter(
+        search_results = StatusUpdate.objects.filter(
                     reduce(operator.or_, filters)).distinct()
+        if request.user.is_anonymous():
+            search_results = search_results.filter(is_private = False)
+        data['search_results'] = search_results
     return render(request, template, data)
 
 def search(request, template='whistlepig/search.html'):
@@ -81,8 +84,10 @@ def search(request, template='whistlepig/search.html'):
         filters = [Q(**{"%s__icontains" % t: search})
                         for t in StatusUpdate.search_fields]
 
-        data['search_results'] = StatusUpdate.objects.filter(
-                    reduce(operator.or_, filters)).distinct()
+        search_results = StatusUpdate.objects.filter(reduce(operator.or_, filters)).distinct()
+        if request.user.is_anonymous():
+            search_results = search_results.filter(is_private = False)
+    data['search_results'] = search_results
     return render(request, template, data)
 
 def home(request, template='whistlepig/home.html'):
@@ -95,19 +100,23 @@ def home(request, template='whistlepig/home.html'):
         will be the baseline for other months
     """
     try:
-        most_recent = StatusUpdate.objects.all().filter(frontpage = True).order_by('-start_time')[0]
+        if request.user.is_anonymous():
+            most_recent = StatusUpdate.objects.all().filter(frontpage = True).filter(is_private = False).order_by('-start_time')[0]
+        else:
+            most_recent = StatusUpdate.objects.all().filter(frontpage = True).order_by('-start_time')[0]
+
         status_updates_found = True
     except IndexError:
         """
             There are no status updates
         """
         most_recent = False
-        pass
+
     if status_updates_found:
         home_results.append({
             'month_name': most_recent.start_time.strftime("%B"),
             'month_year': most_recent.start_time.strftime("%Y"),
-            'articles': get_results_by_month_year(most_recent.start_time.month, most_recent.start_time.year)
+            'articles': get_results_by_month_year(most_recent.start_time.month, most_recent.start_time.year, request.user)
             })
 
     """
@@ -120,31 +129,37 @@ def home(request, template='whistlepig/home.html'):
     if most_recent:
         for i in range(1, total_months_to_show):
             the_month = monthdelta(most_recent.start_time, -i)
-            month_results = get_month_of_results(the_month)
+            month_results = get_month_of_results(the_month, request.user)
             if month_results and not month_results['month_name'] in [m['month_name'] for m in home_results]:
                 home_results.append(month_results)
     data = {}
-    #import pdb; pdb.set_trace()
     data['updates'] = home_results
     return render(request, template, data)
 
 #def rss(request, template='whistlepig/home.html'):
 
-def get_results_by_month_year(month, year):
-    return StatusUpdate.objects.filter(frontpage = True).filter(start_time__year=year, start_time__month=month).order_by('start_time')
+def get_results_by_month_year(month, year, user):
+    all_articles = StatusUpdate.objects.filter(frontpage = True).filter(start_time__year=year, start_time__month=month).order_by('start_time')
 
-def get_month_of_results(current_month):
+    if user.is_anonymous():
+        all_articles = all_articles.filter(is_private = False)
+    return all_articles
+
+def get_month_of_results(current_month, user):
 
     try:
-        most_recent = StatusUpdate.objects.filter(frontpage = True).filter(start_time__lte=current_month).order_by('-start_time')[0]
+        if user.is_anonymous():
+            most_recent = StatusUpdate.objects.filter(frontpage = True).filter(start_time__lte=current_month).filter(is_private = False).order_by('-start_time')[0]
+        else:
+            most_recent = StatusUpdate.objects.filter(frontpage = True).filter(start_time__lte=current_month).order_by('-start_time')[0]
     except IndexError:
         ### No results for this page
         return None
-    
+
     ret_data = {
         'month_name': most_recent.start_time.strftime("%B"),
         'month_year': most_recent.start_time.strftime("%Y"),
-        'articles': get_results_by_month_year(most_recent.start_time.month, most_recent.start_time.year)
+        'articles': get_results_by_month_year(most_recent.start_time.month, most_recent.start_time.year, user)
         }
     return ret_data
 

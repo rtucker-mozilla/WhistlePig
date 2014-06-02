@@ -20,6 +20,7 @@ class StatusUpdate(models.Model):
     timezone = models.ForeignKey('TimeZone')
     site = models.ForeignKey('Site', null=True)
     from_bugzilla = models.BooleanField()
+    is_private = models.BooleanField()
 
     search_fields = (
             'summary',

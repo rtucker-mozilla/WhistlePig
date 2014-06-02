@@ -70,7 +70,7 @@ class StatusUpdateResource(ModelResource):
             'severity': ALL_WITH_RELATIONS,
             'status': ALL_WITH_RELATIONS,
         }
-        queryset = StatusUpdate.objects.all()
+        queryset = StatusUpdate.objects.filter(is_private = False)
 
 class ServiceOutageResource(ModelResource):
     status_update = fields.ForeignKey('whistlepig.api.api.StatusUpdateResource', 'statusupdate', null=True, full=True)
