@@ -83,7 +83,7 @@ def calendar(request, template='whistlepig/calendar.html'):
 
 def search(request, template='whistlepig/search.html'):
     data = {}
-    search = request.POST.get('search', None)
+    search = request.GET.get('search', None)
     if search:
         filters = [Q(**{"%s__icontains" % t: search})
                         for t in StatusUpdate.search_fields]
