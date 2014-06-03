@@ -39,6 +39,8 @@ def event_feed(request):
         return HttpResponse('You must supply a start and end timestamp')
 
     events = StatusUpdate.objects.filter(start_time__gte=start_query).filter(start_time__lte=end_query)
+    if request.user.is_anonymous():
+        events = events.filter(is_private = False)
     out_events = []
     for event in events:
         # Want to tie this into the backend at some point
