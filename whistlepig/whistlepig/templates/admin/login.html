@@ -2,8 +2,6 @@
 {% load browserid %}
 {% load i18n %}
 
-{% block extrastyle %}{% load adminmedia %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/login.css" />{% endblock %}
-
 {% block bodyclass %}login{% endblock %}
 
 {% block nav-global %}{% endblock %}
@@ -13,6 +11,8 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/login.css'" />
+<link href="/static/admin/css/base.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/browserid/persona-buttons.css">
 {% if form.errors and not form.non_field_errors and not form.this_is_the_login_form.errors %}
 <p class="errornote">
