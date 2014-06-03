@@ -9,7 +9,7 @@ import pytz
 class iCalEntriesFeed(Events):
 
     def items(self):
-        return models.StatusUpdate.objects.all()
+        return models.StatusUpdate.objects.filter(is_private = False).all()
 
     def cal_name(self):
         return "Mozilla Status Updates"
