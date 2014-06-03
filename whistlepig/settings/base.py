@@ -88,15 +88,15 @@ MIDDLEWARE_CLASSES = list(MIDDLEWARE_CLASSES) + [
     'whistlepig.middleware.securerequestpropogationmiddleware.SecureRequestPropagationMiddleware',
     ]
 
+error = dict(level=logging.ERROR)
+info = dict(level=logging.INFO)
+
 LOGGING = {
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
+        'django.request': error,
+    },
 }
+
 def jinja_url(view_name, *args, **kwargs):
     from django.core.urlresolvers import reverse, NoReverseMatch
     try:
