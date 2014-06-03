@@ -4,7 +4,7 @@ from django.db.models import Q
 import operator
 from django.shortcuts import render
 from models import StatusUpdate
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.shortcuts import  get_object_or_404
@@ -23,6 +23,8 @@ def admin_send_outage_notification(request, id, template='whistlepig/admin_outag
 
 def detail(request, id, template='whistlepig/detail.html'):
     status_update = get_object_or_404(StatusUpdate, pk=id)
+    if status_update.is_private and request.user.is_anonymous():
+        return HttpResponseForbidden('You do not have access to this resource.')
     data = {
             'article': status_update,
             }
