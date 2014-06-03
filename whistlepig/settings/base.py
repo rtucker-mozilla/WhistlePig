@@ -91,8 +91,10 @@ MIDDLEWARE_CLASSES = list(MIDDLEWARE_CLASSES) + [
 LOGGING = {
     'loggers': {
         'django.request': {
-            'handlers': []
-        }
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
     }
 }
 def jinja_url(view_name, *args, **kwargs):
