@@ -88,7 +88,13 @@ MIDDLEWARE_CLASSES = list(MIDDLEWARE_CLASSES) + [
     'whistlepig.middleware.securerequestpropogationmiddleware.SecureRequestPropagationMiddleware',
     ]
 
-LOGGING = dict(loggers=dict(playdoh={'level': logging.DEBUG}))
+LOGGING = {
+    'loggers': {
+        'django.request': {
+            'handlers': []
+        }
+    }
+}
 def jinja_url(view_name, *args, **kwargs):
     from django.core.urlresolvers import reverse, NoReverseMatch
     try:
