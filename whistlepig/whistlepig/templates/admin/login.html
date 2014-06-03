@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Please log in</title>
-</head>
-<body>
-</body>
-</html>
 {% extends "admin/base_site.html" %}
+{% load browserid %}
 {% load i18n %}
 
 {% block extrastyle %}{% load adminmedia %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/login.css" />{% endblock %}
@@ -20,6 +13,7 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="/static/browserid/persona-buttons.css">
 {% if form.errors and not form.non_field_errors and not form.this_is_the_login_form.errors %}
 <p class="errornote">
 {% blocktrans count form.errors.items|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
@@ -36,34 +30,36 @@
 
 <div id="content-main">
     <div id="loginform">
-    {% if not user.is_authenticated %}
-    <a class="browserid-login" id="browserid" href="#">Sign In With BrowserID</a>
-    <form method="POST" action="/en-US{% url browserid_verify %}">
-    {% csrf_token %}
-    {{ browserid_form.as_p }}
-    </form>
+    {% browserid_info %}
+    {% if user.is_authenticated %}
+      <p>Current user: {{ user.email }}</p>
+      {% browserid_logout text='Logout' %}
+    {% else %}
+      {% browserid_login text='Login with Persona' color='dark' %}
     {% endif %}
+    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+    <div class="form-row">
+        {% if not form.this_is_the_login_form.errors %}{{ form.username.errors }}{% endif %}
+        <label for="id_username" class="required">{% trans 'Username:' %}</label> {{ form.username }}
     </div>
-<script type="text/javascript" src="/static/whistlepig/js/libs/jquery-1.7.1.min.js"></script>
-{{ browserid_form.media }}
-<form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
-  <div class="form-row">
-    {% if not form.this_is_the_login_form.errors %}{{ form.username.errors }}{% endif %}
-    <label for="id_username" class="required">{% trans 'Username:' %}</label> {{ form.username }}
-  </div>
-  <div class="form-row">
-    {% if not form.this_is_the_login_form.errors %}{{ form.password.errors }}{% endif %}
-    <label for="id_password" class="required">{% trans 'Password:' %}</label> {{ form.password }}
-    <input type="hidden" name="this_is_the_login_form" value="1" />
-    <input type="hidden" name="next" value="{{ next }}" />
-  </div>
-  <div class="submit-row">
-    <label>&nbsp;</label><input type="submit" value="{% trans 'Log in' %}" />
-  </div>
-</form>
+        <div class="form-row">
+            {% if not form.this_is_the_login_form.errors %}{{ form.password.errors }}{% endif %}
+            <label for="id_password" class="required">{% trans 'Password:' %}</label> {{ form.password }}
+            <input type="hidden" name="this_is_the_login_form" value="1" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </div>
+        <div class="submit-row">
+          <label>&nbsp;</label><input type="submit" value="{% trans 'Log in' %}" />
+        </div>
+    </form>
 
 <script type="text/javascript">
-document.getElementById('id_username').focus()
+    document.getElementById('id_username').focus()
 </script>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://login.persona.org/include.js"></script>
+    <script src="/static/browserid/api.js"></script>
+    <script src="/static/browserid/browserid.js"></script>
 </div>
 {% endblock %}

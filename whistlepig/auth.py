@@ -25,16 +25,12 @@ class CustomBrowserIDVerify(Verify):
         """the user passed the BrowserID hurdle, but do they have a valid
         email address or vouched for in Mozillians"""
         domain = self.user.email.split('@')[-1].lower()
-        if domain in settings.ALLOWED_BID:
-            # awesome!
-            pass
-        else:
+        if domain not in settings.ALLOWED_BID:
             messages.error(
                 self.request,
                 'Email {0} authenticated but not vouched for'
                 .format(self.user.email)
             )
             return self.login_failure()
-        return self.login_failure()
 
         return super(CustomBrowserIDVerify, self).login_success()

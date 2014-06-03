@@ -1,3 +1,4 @@
+{{ browserid_css() }}
 <section id="sidebar" class="span3">
 <aside>
     <h2>Legend</h2>
@@ -15,5 +16,25 @@
     <li><a href="/rss/">RSS Feed</a></li>
     </ul>
     <h2 style='margin-top: 5px; font-weight: bold;'><form method='post'  action='/en-US/search/'><input placeholder="Search" id='search_box' type='text' name='search' value=''><button type='submit' name='submit' class='button small' value='Go' />Go</button><input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}"></form></h2>
+    {% if messages %}
+        <ul>
+        {% for m in messages %}
+            <li style="color: red;">{{ m }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {{ browserid_info() }}
+    {% if user.is_authenticated() %}
+      <p>Current user: {{ user.email }}</p>
+      {% if user.is_superuser %}
+          <p><a href="/admin/">Go to Admin</a></a></p>
+      {% endif %}
+      {{ browserid_logout(text='Logout') }}
+    {% else %}
+      {{ browserid_login(text='Login', color='dark', next=request.get_full_path) }}
+    {% endif %}
+
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    {{ browserid_js() }}
 </aside>
 </section>

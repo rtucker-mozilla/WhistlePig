@@ -33,6 +33,8 @@ LOCALE_PATHS = (
 # apps here:
 JINGO_EXCLUDE_APPS = [
     'admin',
+    'django_browserid',
+    'browserid',
     'registration',
     'admin_overrides',
 ]
@@ -49,7 +51,6 @@ LOGIN_REDIRECT_URL = '/en-US/admin/whistlepig/statusupdate/'
 LOGIN_REDIRECT_URL_FAILURE = '/en-US/admin/login/'
 
 TEMPLATE_CONTEXT_PROCESSORS = list(TEMPLATE_CONTEXT_PROCESSORS) + [
-    'django_browserid.context_processors.browserid_form',
 ]
 
 # Should robots.txt deny everything or disallow a calculated list of URLs we
@@ -109,3 +110,4 @@ CSP_SCRIPT_SRC = ("'self'", 'https://browserid.org','https://login.persona.org')
 CSP_FRAME_SRC = ("'self'", 'https://browserid.org','https://login.persona.org')
 TASTYPIE_DEFAULT_FORMATS = ['json']
 BUGZILLA_URL = 'https://bugzilla.mozilla.org/show_bug.cgi?id='
+BROWSERID_VERIFY_CLASS = 'whistlepig.auth.CustomBrowserIDVerify'
