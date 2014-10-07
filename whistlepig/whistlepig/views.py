@@ -106,10 +106,11 @@ def home(request, template='whistlepig/home.html'):
     """
     try:
         if request.user.is_anonymous():
-            most_recent = StatusUpdate.objects.all().filter(frontpage = True).filter(is_private = False).order_by('-start_time')[0]
+            all_events = StatusUpdate.objects.all().filter(frontpage = True).filter(is_private = False)
         else:
-            most_recent = StatusUpdate.objects.all().filter(frontpage = True).order_by('-start_time')[0]
+            all_events = StatusUpdate.objects.all().filter(frontpage = True)
 
+        most_recent = all_events.order_by('-start_time')[0]
         status_updates_found = True
     except IndexError:
         """
@@ -144,7 +145,7 @@ def home(request, template='whistlepig/home.html'):
 #def rss(request, template='whistlepig/home.html'):
 
 def get_results_by_month_year(month, year, user):
-    all_articles = StatusUpdate.objects.filter(frontpage = True).filter(start_time__year=year, start_time__month=month).order_by('start_time')
+    all_articles = StatusUpdate.objects.filter(frontpage = True).filter(start_time__year=year, start_time__month=month).order_by('-start_time').order_by('status__sort_order').order_by('severity__sort_order')
 
     if user.is_anonymous():
         all_articles = all_articles.filter(is_private = False)

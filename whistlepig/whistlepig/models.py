@@ -135,6 +135,7 @@ class StatusUpdate(models.Model):
 class Severity(models.Model):
     name = models.CharField(max_length=255, blank=False)
     css_class = models.CharField(max_length=255, blank=False)
+    sort_order = models.IntegerField(blank=False, default=0)
 
     def __unicode__(self):
         return self.name
@@ -144,6 +145,7 @@ class Severity(models.Model):
 
 class Status(models.Model):
     name = models.CharField(max_length=255, blank=False)
+    sort_order = models.IntegerField(blank=False, default=0)
 
     def __unicode__(self):
         return self.name
