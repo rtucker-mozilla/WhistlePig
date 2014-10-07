@@ -37,7 +37,10 @@ class StatusUpdate(models.Model):
 
     def expand_bug(self, input_val):
         regex = '[B|b]ug (\d+)'
-        matches = re.findall(regex, input_val)
+        try:
+            matches = re.findall(regex, input_val)
+        except TypeError:
+            return ''
         if matches:
             for m in matches:
                 input_val = re.sub('[B|b]ug %s' % m, "<a href='https://bugzil.la/%s'>Bug %s</a>" % (m, m), input_val)
